@@ -1,0 +1,114 @@
+MENU RESTAURANTE
+	Menu principal
+		-Atendimentos
+			-Iniciar novo atendimento
+				-Cadastrar cliente:       
+						 //Cadastro ativa o estacionamento
+					-"Insira cpf, nome, idade, sexo, telefone, endereco,"
+						-Mesas disponíveis 
+							//seleciona mesa disponivel,
+							 //estado da mesa >> ocupado
+						-Garçom disponível 
+							//seleciona garcom disponivel, 
+							//mesa >> lista de mesas do garçom
+							//iniciado o atendimento,
+							 //o terminal passa para a tela de cadastro de pedidos
+							 // em "Continuar atendimento"
+				-Iniciar sem cadastro:
+					//clientes não cadastrados serão inicializados com um nome padrão do tipo cliente n, com n++ a cada cliente; o numero reseta após o fechamento diario
+					-Mesas disponíveis 
+						//seleciona mesa disponivel,
+						 //estado da mesa >> ocupado
+						-Garçom disponível 
+							//seleciona garcom disponivel, 
+							//mesa >> lista de mesas do garçom
+							//iniciado o atendimento,
+							 //o terminal passa para a tela de cadastro de pedidos
+							 // em "Continuar atendimento"
+				-Ja possui cadastro:
+					-Mesas disponíveis 
+							//seleciona mesa disponivel,
+							// estado da mesa >> ocupado
+						-Garçom disponível 
+							//seleciona garcom disponivel,
+							// mesa >> lista de mesas do garçom
+			-Continuar atendimento
+				-Escolha a mesa
+					-Adicionar pedido
+						-Selecione o garçom a atender
+							-Novo item:
+								//Exibe lista enumerada de itens do cardapio
+								-Insira numero do pedido
+									-Insira a quantidade
+										-Pressione enter para confimar adição
+							-Remover item
+									-Selecione o numero do item no pedido atual
+										-Pressione enter para confirmar remoção
+					-Remover pedido 
+						//opção voltada para devoluções de pedidos na mesa quando não consumidos
+						-Insira o numero do pedido a remover
+							-Pressione enter para confirmar remoção
+					-Confirmar pedido na mesa
+						//todos os pedidos devem ser confirmados quando entregues à mesa
+						//este método de confirmação torna possível a contabilização do tempo de preparo + tempo de atendimento
+				
+			-Mostrar atendimentos em andamento
+				//exibe relação de mesas ocupadas contendo informações como nome do cliente, garçom em atendimento, hora do começo do atendimento
+			-Encerrar atendimento
+				//exibe lista enumerada de atendimentos em andamento
+				-Insira numero do atendimento
+			-Exibir atendimentos encerrados hoje
+				//exibe lista enumerada de atendimentos encerrados
+		-Cardapio
+			-Exibir cardapio
+				//exibe lista dos itens e de seus IDs
+			-Adicionar item ao cardapio
+				-insira nome do item no cardapio
+				-insira valor unitario do item
+			-Remover item do cardapio
+				//exibe lista dos itens e de seus IDs
+				-insira o numero ID do item a remover
+			-Editar item
+				-insira o numero ID do item a editar
+					-insira novo nome do item
+					-insira novo valor do item
+		-Entregas
+			-Agendar pedido
+				//todos os pedidos devem ser confirmados seu pagamento
+				//a confirmação do pagamento dos pedidos só é possível após a data programada, no caso dos pedidos agendados, para entrega ou retirada;
+				-Individual
+					-Para a data corrente
+						-Para retirar no balcão
+							-Insira os dados do cliente...
+						
+					-Para data futura
+						-Insira a data da encomenda
+							-Retira no balcão
+								-Insira os dados do cliente...
+							-Entrega no endereco
+								--Insira os dados do cliente...
+				-Recorrente 
+					//opção de  renovação mensal
+					//todos os pedidos devem ser confirmados seu pagamento
+					//a confirmação do pagamento dos pedidos só é possível após a data programada, no caso dos pedidos agendados, para entrega ou retirada;
+					-Para retirar no balcão
+						-Insira o dia recorrente
+							-Insira os dados do cliente...
+					-Para entrega
+						-Insira o dia recorrente
+							-Insira os dados do cliente...
+			-Pedidos agendados
+				-Exibir
+					-Individuais agendados
+					-Recorrentes
+					//exibe uma relação dos pedidos agendados
+				-Remover
+					-Individuais
+					-Recorrentes
+					//exibe uma lista enumerada dos pedidos recorrentes
+		-ADM
+			-Relatorios anteriores
+				-Ano             //exibe apenas os anos cujos registros de fechamento pertencem ao ano
+					-Mês         //exibe apenas os meses do dado cujos registros de fechamento pertencem ao ano
+						-Dia     //exibe os dias desse mês que possuem registro de fechamento
+			-Realizar fechamento do dia
