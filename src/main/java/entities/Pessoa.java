@@ -1,6 +1,6 @@
 package entities;
 
-public class Abstract pessoa {
+public abstract class Pessoa {
 
     private String nome;
     private String telefone;
@@ -10,7 +10,7 @@ public class Abstract pessoa {
     private String endereco;
     private String email;
 
-    public pessoa(String nome, String telefone, int idade, String sexo, String endereco, String email, String cpf) {
+    public Pessoa(String nome, String telefone, int idade, String sexo, String endereco, String email, String cpf) {
         this.nome = nome;
         this.telefone = telefone;
         this.idade = idade;
