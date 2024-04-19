@@ -47,13 +47,12 @@ public class NotaFiscal {
         this.atendente = atendente;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public double getValorTotalNota() {
+        double valorTotalNota = this.pedidosNota.Stream().mapToDouble(Pedido -> Pedido.getValorTotalPedido()).sum();
+        return valorTotalNota
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+
 
     public LocalDateTime getHoraGerada() {
         return horaGerada;
@@ -61,5 +60,8 @@ public class NotaFiscal {
 
     public void setHoraGerada(LocalDateTime horaGerada) {
         this.horaGerada = horaGerada;
+    }
+    public String toString(){
+        return "Nota Fiscal: " + "Cliente: " + cliente.getNome() + ", Atendente: " + atendente.getNome() + ", Valor Total: " + valorTotal + ", Hora Gerada: " + horaGerada;
     }
 }

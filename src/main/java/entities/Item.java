@@ -18,18 +18,23 @@ public class Item {
     public void setNome(String nome){
         this.nome=nome;
     }
-    public void setDiaDisponivel(String diaDisponivel){
-        this.diaDisponivel=diaDisponivel;
-    }
+
     public String getDiaDisponivel(){
         return diaDisponivel;
     }
-    public void setValorUnitario(double valorUnitario){
-        this.valorUnitario=valorUnitario;
+
+    public void setDiaDisponivel(String diaDisponivel){
+        this.diaDisponivel=diaDisponivel;
     }
+
     public double getValorUnitario(){
         return valorUnitario;
     }
+
+    public void setValorUnitario(double valorUnitario){
+        this.valorUnitario=valorUnitario;
+    }
+
     public int getIdItem(){
         return idItem;
     }

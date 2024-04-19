@@ -18,7 +18,7 @@ public class Cliente extends Pessoa{
                    String endereco,
                    String email,
                    String cpf) {
-    super(nome, telefone, idade, sexo, endereco, email, cpf);
+    super(nome, telefone, idade, sexo, email, cpf);
     this.historicoCompras = new ArrayList<>();
     }
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import contabilidade.Endereco;
+
 public abstract class Pessoa {
 
     private String nome;
@@ -7,17 +9,17 @@ public abstract class Pessoa {
     private String cpf;
     private int idade;
     private String sexo;
-    private String endereco;
+    private Endereco endereco;
     private String email;
 
-    public Pessoa(String nome, String telefone, int idade, String sexo, String endereco, String email, String cpf) {
+    public Pessoa(String nome, String telefone, int idade, String sexo, String email, String cpf, Endereco endereco) {
         this.nome = nome;
         this.telefone = telefone;
         this.idade = idade;
         this.sexo = sexo;
-        this.endereco = endereco;
         this.email = email;
         this.cpf = cpf;
+        this.endereco=endereco;
     }
 
     public String getNome() {
@@ -67,12 +69,12 @@ public abstract class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getEndereco() {
+    public Endereco getEndereco(){
         return endereco;
     }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setEndereco(Endereco endereco){
+        this.endereco=endereco;
     }
+
+
 }

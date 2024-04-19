@@ -1,23 +1,41 @@
 package contabilidade;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import entities.Garcom;
 import plataforma.Mesa;
-import entities.Item;
+
 public class Pedido {
-    private List<Item> itensPedido;
+    private List<ItemDoPedido> itensDoPedido;
 
     private Mesa mesa;
     private Garcom garcom;
-    private double valorTotal;
+    private double valorPedido;
+    private LocalDateTime horaEfetuado;
+    private LocalDateTime horaEntregue;
 
-    public List<Item> getItensPedido() {
-        return itensPedido;
+    public Pedido() {
     }
 
-    public void setItensPedido(List<Item> itensPedido) {
-        this.itensPedido = itensPedido;
+    public Pedido(Mesa mesa, Garcom garcom, LocalDateTime horaEfetuado, LocalDateTime horaEntregue) {
+        List<ItemDoPedido> itensDoPedido = new ArrayList<ItemDoPedido>();
+        this.mesa = mesa;
+        this.garcom = garcom;
+        this.horaEfetuado = horaEfetuado;
+        this.horaEntregue = horaEntregue;
+    }
+
+    public List<ItemDoPedido> getItensDoPedido() {
+        return itensDoPedido;
+    }
+
+    public void adicionarAoPedido(ItemDoPedido itemDoPedido) {
+        this.itensDoPedido.add(itemDoPedido);
+    }
+    public void removerDoPedido(ItemDoPedido itemDoPedido) {
+        this.itensDoPedido.remove(itemDoPedido);
     }
 
     public Mesa getMesa() {
@@ -36,15 +54,14 @@ public class Pedido {
         this.garcom = garcom;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
-    }
+    public double getValorTotalPedido() {
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+        return valorPedido;
     }
-
-    public LocalDateTime getHoraEfetuado() {
+    public void setValorTotalPedido(double valorPedido) {
+        this.valorPedido = this.itensDoPedido.stream().mapToDouble(ItemDoPedido -> ItemDoPedido.getValorTotal()).sum();
+    }
+      public LocalDateTime getHoraEfetuado() {
         return horaEfetuado;
     }
 
@@ -57,20 +74,6 @@ public class Pedido {
     }
 
     public void setHoraEntregue(LocalDateTime horaEntregue) {
-        this.horaEntregue = horaEntregue;
-    }
-
-    private LocalDateTime horaEfetuado;
-    private LocalDateTime horaEntregue;
-
-    public Pedido(){}
-
-    public Pedido(List<Item> itensPedido, Mesa mesa, Garcom garcom, double valorTotal, LocalDateTime horaEfetuado, LocalDateTime horaEntregue) {
-        this.itensPedido = itensPedido;
-        this.mesa = mesa;
-        this.garcom = garcom;
-        this.valorTotal = valorTotal;
-        this.horaEfetuado = horaEfetuado;
         this.horaEntregue = horaEntregue;
     }
 
