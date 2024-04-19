@@ -11,6 +11,9 @@ public Cardapio() {
     public void addItemAoCardapio(Item item){
         cardapio.add(item);
     }
+    public void removeItemDoCardapio(Item item){
+    cardapio.remove(item);
+    }
     public List<Item> getCardapio() {
         return cardapio;
     }

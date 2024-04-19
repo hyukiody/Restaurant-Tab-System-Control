@@ -22,7 +22,7 @@ public class ItemDoPedido {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    public double getValorTotal(){
+    public double getValorTotalItem(){
         return this.item.getValorUnitario() * this.quantidade;
     }
 }

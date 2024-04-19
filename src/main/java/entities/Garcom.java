@@ -1,10 +1,11 @@
 package entities;
 
-public class Garcom extends Funcionario implements Atendente{
-    public Garcom(String nome, String telefone, int idade, String sexo, String endereco, String email, String cpf, int idAutorizacao) {
-        super(nome, telefone, idade, sexo, endereco, email, cpf, idAutorizacao);
-    }
+import contabilidade.Endereco;
 
+public class Garcom extends Funcionario implements Atendente{
+    public Garcom(String nome, String telefone, int idade, String sexo, String email, String cpf,Endereco endereco, int idAutorizacao) {
+        super(nome, telefone, idade, sexo, email, cpf,endereco, idAutorizacao);
+    }
     @Override
     public void realizarPedido() {
 

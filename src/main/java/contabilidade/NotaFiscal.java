@@ -5,21 +5,22 @@ import entities.Cliente;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 
 public class NotaFiscal {
 
     private List<Pedido> pedidosNota;
     private Cliente cliente;
     private Atendente atendente;
-    private double valorTotal;
+    private double valorTotalNota;
     private LocalDateTime horaGerada;
 
     public NotaFiscal(){}
-    public NotaFiscal(List<Pedido> pedidosNota, Cliente cliente, Atendente atendente, double valorTotal, LocalDateTime horaGerada) {
-        this.pedidosNota = pedidosNota;
+    public NotaFiscal( Cliente cliente, Atendente atendente, LocalDateTime horaGerada) {
+        List<Pedido> pedidosNota = new ArrayList<Pedido>();
         this.cliente = cliente;
         this.atendente = atendente;
-        this.valorTotal = valorTotal;
+        this.valorTotalNota = 0;
         this.horaGerada = horaGerada;
     }
 
@@ -27,8 +28,11 @@ public class NotaFiscal {
         return pedidosNota;
     }
 
-    public void setPedidosNota(List<Pedido> pedidosNota) {
-        this.pedidosNota = pedidosNota;
+    public void adicionarPedido(Pedido pedido) {
+        this.pedidosNota.add(pedido);
+    }
+    public void removerPedido(Pedido pedido) {
+        this.pedidosNota.remove(pedido);
     }
 
     public Cliente getCliente() {
@@ -48,8 +52,7 @@ public class NotaFiscal {
     }
 
     public double getValorTotalNota() {
-        double valorTotalNota = this.pedidosNota.Stream().mapToDouble(Pedido -> Pedido.getValorTotalPedido()).sum();
-        return valorTotalNota
+        return valorTotalNota = this.pedidosNota.stream().mapToDouble(Pedido::getValorTotalPedido).sum();
     }
 
 
@@ -62,6 +65,6 @@ public class NotaFiscal {
         this.horaGerada = horaGerada;
     }
     public String toString(){
-        return "Nota Fiscal: " + "Cliente: " + cliente.getNome() + ", Atendente: " + atendente.getNome() + ", Valor Total: " + valorTotal + ", Hora Gerada: " + horaGerada;
+        return "Nota Fiscal: " + "Cliente: " + cliente.getNome() + ", Atendente: " + atendente.getNome() + ", Valor Total: " + valorTotalNota + ", Hora Gerada: " + horaGerada;
     }
 }

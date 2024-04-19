@@ -55,11 +55,10 @@ public class Pedido {
     }
 
     public double getValorTotalPedido() {
-
         return valorPedido;
     }
     public void setValorTotalPedido(double valorPedido) {
-        this.valorPedido = this.itensDoPedido.stream().mapToDouble(ItemDoPedido -> ItemDoPedido.getValorTotal()).sum();
+        this.valorPedido = this.itensDoPedido.stream().mapToDouble(ItemDoPedido::getValorTotalItem).sum();
     }
       public LocalDateTime getHoraEfetuado() {
         return horaEfetuado;
