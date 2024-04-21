@@ -5,7 +5,7 @@ import accountance.Adress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Person {a
+public class Client extends Person {
     private List<Billing> billHistory;
     public Client(){
         super();
