@@ -23,6 +23,6 @@ public class OrderItems {
         this.quantity = quantity;
     }
     public double getItemTotalValue(){
-        return this.item.getSingleValue() * this.quantity;
+        return this.item.getUnitValue() * this.quantity;
     }
 }
