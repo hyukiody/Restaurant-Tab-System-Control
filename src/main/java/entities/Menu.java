@@ -2,10 +2,10 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.List;
-public class Cardapio {
+public class Menu {
     private List<Item> cardapio;
 
-public Cardapio() {
+public Menu() {
     this.cardapio= new ArrayList<Item>();
     }
     public void addItemAoCardapio(Item item){
@@ -20,7 +20,7 @@ public Cardapio() {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cardapio: ");
+        sb.append("Menu: ");
         for (Item item : cardapio) {
             sb.append(item.toString()).append(", ");
         }

@@ -1,12 +1,12 @@
-package contabilidade;
+package accountance;
 
 import entities.Item;
 
-public class ItemDoPedido {
+public class RequestItems {
     private Item item;
     private int quantidade;
 
-    public ItemDoPedido(Item item, int quantidade) {
+    public RequestItems(Item item, int quantidade) {
         this.item = item;
         this.quantidade = quantidade;
     }
