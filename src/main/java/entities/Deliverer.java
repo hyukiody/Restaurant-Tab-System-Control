@@ -7,10 +7,7 @@ public class Deliverer extends Employee implements Attendant {
         super(name, phone, age, gender, email, cpf, adress, idAuth);
     }
 
-    @Override
-    public String getName(String name) {
-        return null;
-    }
+    
 
     @Override
     public void performOrder() {
