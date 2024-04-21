@@ -65,6 +65,6 @@ public class Billing {
         this.horaGerada = horaGerada;
     }
     public String toString(){
-        return "Nota Fiscal: " + "Client: " + client.getName() + ", Attendant: " + attendant.getNome() + ", Valor Total: " + valorTotalNota + ", Hora Gerada: " + horaGerada;
+        return "Nota Fiscal: " + "Client: " + client.getName() + ", Attendant: " + attendant.getName() + ", Valor Total: " + valorTotalNota + ", Hora Gerada: " + horaGerada;
     }
 }

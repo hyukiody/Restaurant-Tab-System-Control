@@ -7,7 +7,7 @@ public class Clerk extends Employee implements Attendant {
         super(nome, telefone, idade, sexo, email, cpf, adress, idAutorizacao);
     }
 
-    @Override
+        @Override
     public void performOrder() {
         System.out.println("Request realizado");
     }
@@ -23,7 +23,7 @@ public class Clerk extends Employee implements Attendant {
     }
 
     @Override
-    public String getName(String name) {
-        return this.name;
+    public String getName(){
+        return null;
     }
 }

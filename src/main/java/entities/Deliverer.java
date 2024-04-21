@@ -3,8 +3,8 @@ package entities;
 import accountance.Adress;
 
 public class Deliverer extends Employee implements Attendant {
-    public Deliverer(String nome, String telefone, int idade, String sexo, String email, String cpf, Adress adress, int idAutorizacao) {
-        super(nome, telefone, idade, sexo, email, cpf, adress, idAutorizacao);
+    public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Adress adress, int idAuth) {
+        super(name, phone, age, gender, email, cpf, adress, idAuth);
     }
 
     @Override
@@ -28,11 +28,9 @@ public class Deliverer extends Employee implements Attendant {
     }
 
     @Override
-    public String getNome() {
+    public String getName() {
         return null;
     }
 
-    @Override
-    public String getName() {
-        return null;    }
+
 }

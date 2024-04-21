@@ -18,5 +18,4 @@ public abstract class Employee extends Person {
         this.idAuth = idAuth;
     }
 
-    public abstract String getName(String name);
 }

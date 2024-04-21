@@ -5,6 +5,6 @@ public interface Attendant {
     public void scheduleOrder();
     public void deliverOrder();
 
-    public String getNome();
+    public String getName();
 
 }
