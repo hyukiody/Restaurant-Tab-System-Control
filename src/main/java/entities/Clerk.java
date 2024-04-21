@@ -9,17 +9,17 @@ public class Clerk extends Employee implements Attendant {
 
         @Override
     public void performOrder() {
-        System.out.println("Request realizado");
+        System.out.println("Order realizado");
     }
 
     @Override
     public void scheduleOrder() {
-        System.out.println("Request agendado");
+        System.out.println("Order agendado");
     }
 
     @Override
     public void deliverOrder() {
-        System.out.println("Request entregue");
+        System.out.println("Order entregue");
     }
 
     @Override

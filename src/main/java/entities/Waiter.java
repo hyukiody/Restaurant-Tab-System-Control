@@ -7,12 +7,7 @@ public class Waiter extends Employee implements Attendant {
         super(nome, telefone, idade, sexo, email, cpf, adress, idAutorizacao);
     }
 
-    @Override
-    public String getName(String name) {
-        return null;
-    }
-
-    @Override
+        @Override
     public void performOrder() {
 
     }

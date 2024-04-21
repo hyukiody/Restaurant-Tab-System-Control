@@ -34,21 +34,21 @@ MENU RESTAURANTE
 							// table >> lista de mesas do garçom
 			-Continuar atendimento
 				-Escolha a table
-					-Adicionar request
+					-Adicionar order
 						-Selecione o garçom a atender
 							-Novo item:
 								//Exibe lista enumerada de itens do cardapio
-								-Insira numero do request
+								-Insira numero do order
 									-Insira a quantidade
 										-Pressione enter para confimar adição
 							-Remover item
-									-Selecione o numero do item no request atual
+									-Selecione o numero do item no order atual
 										-Pressione enter para confirmar remoção
-					-Remover request
+					-Remover order
 						//opção voltada para devoluções de pedidos na table quando não consumidos
-						-Insira o numero do request a remover
+						-Insira o numero do order a remover
 							-Pressione enter para confirmar remoção
-					-Confirmar request na table
+					-Confirmar order na table
 						//todos os pedidos devem ser confirmados quando entregues à table
 						//este método de confirmação torna possível a contabilização do tempo de preparo + tempo de atendimento
 				
@@ -73,7 +73,7 @@ MENU RESTAURANTE
 					-insira novo nome do item
 					-insira novo valor do item
 		-Entregas
-			-Agendar request
+			-Agendar order
 				//todos os pedidos devem ser confirmados seu pagamento
 				//a confirmação do pagamento dos pedidos só é possível após a data programada, no caso dos pedidos agendados, para entrega ou retirada;
 				-Individual

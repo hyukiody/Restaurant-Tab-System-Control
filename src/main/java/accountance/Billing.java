@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Billing {
 
-    private List<Request> pedidosNota;
+    private List<Order> pedidosNota;
     private Client client;
     private Attendant attendant;
     private double valorTotalNota;
@@ -17,22 +17,22 @@ public class Billing {
 
     public Billing(){}
     public Billing(Client client, Attendant attendant, LocalDateTime horaGerada) {
-        List<Request> pedidosNota = new ArrayList<Request>();
+        List<Order> pedidosNota = new ArrayList<Order>();
         this.client = client;
         this.attendant = attendant;
         this.valorTotalNota = 0;
         this.horaGerada = horaGerada;
     }
 
-    public List<Request> getPedidosNota() {
+    public List<Order> getPedidosNota() {
         return pedidosNota;
     }
 
-    public void adicionarPedido(Request request) {
-        this.pedidosNota.add(request);
+    public void adicionarPedido(Order order) {
+        this.pedidosNota.add(order);
     }
-    public void removerPedido(Request request) {
-        this.pedidosNota.remove(request);
+    public void removerPedido(Order order) {
+        this.pedidosNota.remove(order);
     }
 
     public Client getCliente() {
@@ -52,7 +52,7 @@ public class Billing {
     }
 
     public double getValorTotalNota() {
-        return valorTotalNota = this.pedidosNota.stream().mapToDouble(Request::getValorTotalPedido).sum();
+        return valorTotalNota = this.pedidosNota.stream().mapToDouble(Order::getValorTotalPedido).sum();
     }
 
 
