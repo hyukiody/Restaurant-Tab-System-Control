@@ -1,10 +1,10 @@
 package entities;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+
+import static entities.Item.fromString;
 
 public class Menu {
     private List<Item> menu;
@@ -78,9 +78,13 @@ public class Menu {
         try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
             String line;
             while((line = reader.readLine())!=null){
-                Item item = new Item(line);
+                menu.add(fromString(line));
                 
             }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

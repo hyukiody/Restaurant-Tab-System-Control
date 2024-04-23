@@ -20,7 +20,7 @@ public class Order {
     }
 
     public Order(Table table, Waiter waiter, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
-        List<OrderItems> itensDoPedido = new ArrayList<OrderItems>();
+        List<OrderItems> orderItems = new ArrayList<OrderItems>();
         this.table = table;
         this.waiter = waiter;
         this.timeOrdered = timeOrdered;
