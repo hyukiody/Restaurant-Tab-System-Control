@@ -11,5 +11,14 @@ public class Attendance {
     private Table table;
     private Billing billing;
     private Order order;
-    public void viewCurrent
+    public Attendance(Table table, Billing billing, Order order){
+        this.table = table;
+        this.billing = billing;
+        this.order = order;
+    }
+    public void viewOngoingAttendances(){
+    }
+    public void newAttendance(){
+
+    }
 }
