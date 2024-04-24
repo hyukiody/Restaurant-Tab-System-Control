@@ -29,7 +29,7 @@ public class OrderItems implements Comparator<OrderItems> {
         return orderItem1.getItem().getName().toUpperCase().compareTo(orderItem2.getItem().getName().toUpperCase());
     }
     public String toString(){
-        return "Item: " + this.item.getName() + " - Quantity: "  + this.getQuantity();
+        return "----Prato: " + this.getItem().getName() + " - Quantity: "  + this.getQuantity();
     }
 
 }

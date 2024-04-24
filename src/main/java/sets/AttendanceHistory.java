@@ -18,10 +18,10 @@ public class AttendanceHistory {
         this.pastBillings.add(billing);
     }
     public String toString(){
-        String history = "";
+        StringBuilder history = new StringBuilder();
         for (Billing bill : pastBillings){
-            history += bill.toString();
+            history.append(bill.toString());
         }
-        return history;
+        return history.toString();
     }
 }

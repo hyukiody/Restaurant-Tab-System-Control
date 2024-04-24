@@ -26,7 +26,7 @@ public class Billing {
         this.totalBillValue =0;
         this.paymentTime =null;
         this.PaymentStatus = "Paid";
-        this.billId=(int)Math.random()*1000;
+        this.billId= (int) (Math.random() * 1000);
     }
     public Billing(Client client, Employee employee, LocalDateTime paymentTime, String PaymentStatus) {
         this.billOrders = new ArrayList<Order>();
@@ -35,14 +35,14 @@ public class Billing {
         this.totalBillValue = 0;
         this.paymentTime = paymentTime;
         this.PaymentStatus = PaymentStatus;
-        this.billId=(int)Math.random()*1000;
+        this.billId= (int) (Math.random() * 1000);
     }
 
     public List<Order> getBillOrders() {
         return billOrders;
     }
     public void addOrder(Order order) {
-        if(this.getPaymentStatus()=="Paid"){
+        if(this.getPaymentStatus().equals("Paid")){
             setPaymentStatus("Pending");
         }
         this.billOrders.add(order);
@@ -56,7 +56,7 @@ public class Billing {
     public Client getClient() {
         return client;
     }
-    public void setClient(Client client) {
+    public void setlient(Client client) {
         this.client = client;
     }
     public Employee getEmployee() {
@@ -82,6 +82,19 @@ public class Billing {
         return billId;
     }
         public String toString(){
-        return "Nota Fiscal: ID: "+ getBillId()  + "Client: " + client.getName() + ", Employee: " + employee.getName() + ", Valor Total: " + getTotalBillValue() + ", Hora Gerada: " + getPaymentTime();}
+
+            if(!billOrders.isEmpty()){
+                int counter=1;
+                StringBuilder body = new StringBuilder("Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Employee: " + employee.getName() + ", Valor Total: " + getTotalBillValue() + ", Hora Gerada: " + getPaymentTime() + "\n Pedidos da Nota: \n");
+                for (Order order : billOrders) {
+                    body.append("-Pedido N°").append(counter + "\n");
+                    body.append(order.toString());
+                    counter++;
+                }
+                return body.toString();
+            }else{
+                return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Employee: " + employee.getName() + "\n Esta nota não possui pedidos. \n";
+            }
+    }
 
 }

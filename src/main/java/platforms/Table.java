@@ -1,6 +1,5 @@
 package platforms;
 
-import services.accountance.Billing;
 import entities.Client;
 import entities.Waiter;
 
@@ -22,10 +21,10 @@ public class Table {
         this.client = client;
     }
 
-    public void addCliente(Client client){
+    public void addClient(Client client){
         this.client = client;
     }
-    public void removeCliente(){
+    public void removeClient(){
         this.client = null;
     }
     public List<Waiter> getWaiters() {

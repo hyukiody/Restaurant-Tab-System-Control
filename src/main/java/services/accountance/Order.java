@@ -53,7 +53,7 @@ public class Order {
     }
     public void setValorTotalPedido(double valorPedido) {
         this.orderValue = this.orderItems.stream().mapToDouble(OrderItems::getItemTotalValue).sum();}
-      public LocalDateTime getTimeOrdered() {
+    public LocalDateTime getTimeOrdered() {
         return timeOrdered;
     }
     public void setTimeOrdered(LocalDateTime timeOrdered) {
@@ -67,11 +67,18 @@ public class Order {
     }
     public String toString(){
 
-
-        String string = "Pedidos: \n";
-        for(OrderItems orderItems : orderItems){
-            string += orderItems.toString() + ", ";
+        if(!orderItems.isEmpty()){
+            int counter = 1;
+            StringBuilder string = new StringBuilder("--Lista de itens do pedido:\n");
+            for (OrderItems orderItems : orderItems) {
+                string.append("---Item n°" + counter + "\n");
+                string.append(orderItems.toString()).append(",\n ");
+                counter ++;
+            }
+            return string.toString();
         }
-        return string;
+        else{
+            return "Lista de Pedidos vazia.";
+        }
     }
 }
