@@ -1,9 +1,8 @@
 package entities;
 
 import sets.Address;
-import sets.Attendant;
 
-public class Waiter extends Employee implements Attendant {
+public class Waiter extends entities.Employee implements sets.Employee {
     public Waiter(String nome, String telefone, int idade, String sexo, String email, String cpf, Address address, int idAutorizacao) {
         super(nome, telefone, idade, sexo, email, cpf, address, idAutorizacao);
     }
@@ -22,6 +21,9 @@ public class Waiter extends Employee implements Attendant {
     public void deliverOrder() {
 
     }
-
+    @Override
+    public String getName(){
+        return null;
+    }
 
 }

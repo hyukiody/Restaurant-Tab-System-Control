@@ -1,6 +1,6 @@
 package sets;
 
-public interface Attendant {
+public interface Employee {
     public void performOrder();
     public void scheduleOrder();
     public void deliverOrder();

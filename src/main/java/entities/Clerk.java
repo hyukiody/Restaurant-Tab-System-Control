@@ -1,9 +1,8 @@
 package entities;
 
 import sets.Address;
-import sets.Attendant;
 
-public class Clerk extends Employee implements Attendant {
+public class Clerk extends entities.Employee implements sets.Employee {
     public Clerk(String nome, String telefone, int idade, String sexo, String email, String cpf, Address address, int idAutorizacao) {
         super(nome, telefone, idade, sexo, email, cpf, address, idAutorizacao);
     }

@@ -1,6 +1,6 @@
 package services.accountance;
 
-import sets.Attendant;
+import sets.Employee;
 import entities.Client;
 
 import java.time.LocalDateTime;
@@ -9,72 +9,79 @@ import java.util.ArrayList;
 
 public class Billing {
 
-    private List<Order> pedidosNota;
+    private List<Order> billOrders;
     private Client client;
-    private Attendant attendant;
-    private double valorTotalNota;
-    private LocalDateTime horaGerada;
+    private Employee employee;
+    private double totalBillValue;
+    private LocalDateTime paymentTime;
     private String PaymentStatus;
 
+
+
+    private int billId;
     public Billing(){
+        this.billOrders = new ArrayList<Order>();
         this.client=null;
-        this.attendant=null;
-        this.valorTotalNota=0;
-        this.horaGerada=null;
+        this.employee =null;
+        this.totalBillValue =0;
+        this.paymentTime =null;
         this.PaymentStatus = "Paid";
+        this.billId=(int)Math.random()*1000;
     }
-    public Billing(Client client, Attendant attendant, LocalDateTime horaGerada,String PaymentStatus) {
-        List<Order> pedidosNota = new ArrayList<Order>();
+    public Billing(Client client, Employee employee, LocalDateTime paymentTime, String PaymentStatus) {
+        this.billOrders = new ArrayList<Order>();
         this.client = client;
-        this.attendant = attendant;
-        this.valorTotalNota = 0;
-        this.horaGerada = horaGerada;
+        this.employee = employee;
+        this.totalBillValue = 0;
+        this.paymentTime = paymentTime;
         this.PaymentStatus = PaymentStatus;
+        this.billId=(int)Math.random()*1000;
     }
 
-    public List<Order> getPedidosNota() {
-        return pedidosNota;
+    public List<Order> getBillOrders() {
+        return billOrders;
     }
-
-    public void adicionarPedido(Order order) {
-        this.pedidosNota.add(order);
+    public void addOrder(Order order) {
+        if(this.getPaymentStatus()=="Paid"){
+            setPaymentStatus("Pending");
+        }
+        this.billOrders.add(order);
     }
-    public void removerPedido(Order order) {
-        this.pedidosNota.remove(order);
+    public void removeOrder(Order order) {
+        this.billOrders.remove(order);
+        if(this.billOrders.isEmpty()){
+            setPaymentStatus("Paid");
+        }
     }
-
-    public Client getCliente() {
+    public Client getClient() {
         return client;
     }
-
-    public void setCliente(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
-
-    public Attendant getAtendente() {
-        return attendant;
+    public Employee getEmployee() {
+        return employee;
     }
-
-    public void setAtendente(Attendant attendant) {
-        this.attendant = attendant;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
-
-    public double getValorTotalNota() {
-        return valorTotalNota = this.pedidosNota.stream().mapToDouble(Order::getValorTotalPedido).sum();
+    public double getTotalBillValue() {
+        return totalBillValue = this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum();}
+    public LocalDateTime getPaymentTime() {
+        return paymentTime;
     }
-    public LocalDateTime getHoraGerada() {
-        return horaGerada;
-    }
-    public void setHoraGerada(LocalDateTime horaGerada) {
-        this.horaGerada = horaGerada;
+    public void makePayment(LocalDateTime paymentTime) {
+        setPaymentStatus("Paid");
+        this.paymentTime = LocalDateTime.now();
     }
     public String getPaymentStatus() {
-        return PaymentStatus;
-    }
+        return PaymentStatus;}
     public void setPaymentStatus(String PaymentStatus) {
-        this.PaymentStatus = PaymentStatus;
+        this.PaymentStatus = PaymentStatus;}
+    public int getBillId() {
+        return billId;
     }
-    public String toString(){
-        return "Nota Fiscal: " + "Client: " + client.getName() + ", Attendant: " + attendant.getName() + ", Valor Total: " + valorTotalNota + ", Hora Gerada: " + horaGerada;
-    }
+        public String toString(){
+        return "Nota Fiscal: ID: "+ getBillId()  + "Client: " + client.getName() + ", Employee: " + employee.getName() + ", Valor Total: " + getTotalBillValue() + ", Hora Gerada: " + getPaymentTime();}
+
 }

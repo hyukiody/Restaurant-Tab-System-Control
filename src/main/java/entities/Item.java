@@ -4,7 +4,7 @@ import sets.Days;
 
 import java.util.*;
 
-public class Item {
+public class Item implements Comparator<Item> {
     private String name;
     private List<String> availableDays;
     private double unitValue;
@@ -69,7 +69,7 @@ public class Item {
     }
     @Override
     public String toString() {
-        //Dados do item : nome
+        // Dados do item : nome
         // Dias disponiveis: domingo, segunda
         // Valor da unidade: valor
         // ID: id
@@ -173,7 +173,7 @@ public class Item {
         int choice = sc.nextInt();
         while (choice != 0) {
             try {
-                if (!item.availableDays.contains(Days.values()[choice - 1].toString()) == true) {
+                if (!item.availableDays.contains(Days.values()[choice - 1].toString())) {
                     item.availableDays.add(Days.values()[choice - 1].toString());
                 } else {
                     System.out.println("Dia já adicionado");
@@ -241,7 +241,8 @@ public class Item {
                 */
         }
         sc.close();
-
-
+    }
+    public int compare(Item item1, Item item2) {
+        return item1.getName().toUpperCase().compareTo(item2.getName().toUpperCase());
     }
 }

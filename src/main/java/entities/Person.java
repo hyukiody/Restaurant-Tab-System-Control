@@ -74,11 +74,11 @@ public abstract class Person {
         this.email = email;
     }
 
-    public Address getEndereco() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setEndereco(Address address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

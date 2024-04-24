@@ -10,7 +10,7 @@ public class Attendance {
     private Table table;
     private Billing billing;
     private LocalDateTime startTime;
-
+    private LocalDateTime endTime;
     public Attendance(){
         this.table = null;
         this.billing = null;
@@ -37,7 +37,9 @@ public class Attendance {
         return new Attendance();
     }
     public void endAttendance(){
-        if(this.billing.getPaymentStatus()=="Paid"){}
+        if(this.billing.getPaymentStatus()=="Paid"){
+
+        }
     }
     public String toString(){
         return "Atendimento Iniciado em: " + this.startTime.toString() + "\n Mesa:" + this.table.getTableInfo()+"\nNota: " + this.billing.toString();

@@ -11,16 +11,21 @@ public class Region {
     private List<Table> tables;
 
     public Region(){
-        this.attendances = null;
+        this.attendances = new ArrayList<>();
         this.tables = new ArrayList<>();
         for(Tables table : Tables.values()){
             this.tables.add(new Table());
         }
     }
     public void viewOpenAttendances(){
-        System.out.println("Atendimentos em andamento: ");
-        for(Attendance attendance : this.attendances){
-            System.out.println(attendance.toString());
+        if(!attendances.isEmpty()) {
+            System.out.println("Atendimentos em andamento: ");
+            for (Attendance attendance : this.attendances) {
+                System.out.println(attendance.toString());
+            }
+        }
+        else{
+            System.out.println("Não há atendimentos em andamento.");
         }
         //to show all ongoing attendances and their respective tables
     }

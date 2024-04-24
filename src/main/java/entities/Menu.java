@@ -47,6 +47,7 @@ public class Menu {
                 }
             }
         }
+        sc.close();
     }
 
     public List<Item> getMenu() {
