@@ -82,5 +82,7 @@ public abstract class Person {
         this.address = address;
     }
 
-
+    public void viewInfo(){
+        System.out.println("Nome: " + this.getName() + "\nCPF: " + this.getCpf() );
+    }
 }

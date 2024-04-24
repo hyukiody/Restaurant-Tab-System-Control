@@ -36,7 +36,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         System.out.println("Itens cadastrados no momento");
         menu.toString();
-        System.out.println("Digite o ID do item que deseja remover:");
+        System.out.println("Digite o ID do item que deseja remover:\n");
         int id = sc.nextInt();
         while(choice!=0){
             for (Item item : menu) {

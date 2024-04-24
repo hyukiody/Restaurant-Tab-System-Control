@@ -23,8 +23,5 @@ public class Waiter extends Employee implements Attendant {
 
     }
 
-    @Override
-    public String getName() {
-        return null;
-    }
+
 }
