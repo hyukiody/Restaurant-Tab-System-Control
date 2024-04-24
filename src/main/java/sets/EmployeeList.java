@@ -32,10 +32,10 @@ public class EmployeeList {
         return false;
     }
     public String toString(){
-        StringBuilder list = new StringBuilder();
+        String list = "";
         for (Employee employee : employees){
-            list.append(employee.toString());
+            list += employee.toString();
         }
-        return list.toString();
+        return list;
     }
 }
