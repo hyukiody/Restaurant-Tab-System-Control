@@ -4,7 +4,7 @@ MENU RESTAURANTE
 			-Iniciar novo atendimento
 				-Cadastrar client:
 						 //Cadastro ativa o estacionamento
-					-"Insira cpf, nome, idade, sexo, telefone, adress,"
+					-"Insira cpf, nome, idade, sexo, telefone, address,"
 						-Mesas disponíveis 
 							//seleciona table disponivel,
 							 //estado da table >> ocupado
@@ -85,7 +85,7 @@ MENU RESTAURANTE
 						-Insira a data da encomenda
 							-Retira no balcão
 								-Insira os dados do client...
-							-Entrega no adress
+							-Entrega no address
 								--Insira os dados do client...
 				-Recorrente 
 					//opção de  renovação mensal

@@ -1,4 +1,4 @@
-package accountance;
+package services.accountance;
 
 import entities.Item;
 

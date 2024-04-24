@@ -1,10 +1,11 @@
 package entities;
 
-import accountance.Adress;
+import sets.Address;
+import sets.Attendant;
 
 public class Clerk extends Employee implements Attendant {
-    public Clerk(String nome, String telefone, int idade, String sexo, String email, String cpf, Adress adress, int idAutorizacao) {
-        super(nome, telefone, idade, sexo, email, cpf, adress, idAutorizacao);
+    public Clerk(String nome, String telefone, int idade, String sexo, String email, String cpf, Address address, int idAutorizacao) {
+        super(nome, telefone, idade, sexo, email, cpf, address, idAutorizacao);
     }
 
         @Override

@@ -8,7 +8,7 @@ import static entities.Item.fromString;
 
 public class Menu {
     private List<Item> menu;
-    private String filename = "menu.txt"
+    private String filename = "menu.txt";
 
     public Menu() {
         this.menu = new ArrayList<Item>();

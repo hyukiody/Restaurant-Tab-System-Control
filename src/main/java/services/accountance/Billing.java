@@ -1,6 +1,6 @@
-package accountance;
+package services.accountance;
 
-import entities.Attendant;
+import sets.Attendant;
 import entities.Client;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,12 @@ public class Billing {
     private double valorTotalNota;
     private LocalDateTime horaGerada;
 
-    public Billing(){}
+    public Billing(){
+        this.client=null;
+        this.attendant=null;
+        this.valorTotalNota=0;
+        this.horaGerada=null;
+    }
     public Billing(Client client, Attendant attendant, LocalDateTime horaGerada) {
         List<Order> pedidosNota = new ArrayList<Order>();
         this.client = client;

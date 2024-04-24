@@ -1,12 +1,12 @@
-package accountance;
+package sets;
 
-public class Adress {
+public class Address {
     private String streetAndNumber;
     private String block;
     private String city;
     private String cep;
 
-    public Adress(String streetAndNumber, String block, String city, String cep) {
+    public Address(String streetAndNumber, String block, String city, String cep) {
         this.streetAndNumber = streetAndNumber;
         this.block = block;
         this.city = city;

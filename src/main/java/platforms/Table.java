@@ -1,34 +1,30 @@
 package platforms;
 
-import accountance.Billing;
+import services.accountance.Billing;
 import entities.Client;
 import entities.Waiter;
 
 import java.util.List;
 
 public class Table {
-    private Billing billing;
     private Client client;
     private List<Waiter> waiters;
+    public Table() {
+        this.client = null;
+        this.waiters = null;
+    }
 
-    public Table(){}
-
-    public Table(Billing billing, Client client, List<Waiter> waiters) {
-        this.billing = billing;
+    public void setClient(Client client) {
         this.client = client;
-        this.waiters = waiters;
     }
-    public void setNotaFiscal(Billing billing) {
-        this.billing = billing;
-    }
-    public Billing getNotaFiscal() {
-        return billing;
-    }
-    public Client getCliente() {
+    public Client getClient() {
         return client;
     }
-    public void setCliente(Client client) {
+    public void addCliente(Client client){
         this.client = client;
+    }
+    public void removeCliente(){
+        this.client = null;
     }
     public List<Waiter> getWaiters() {
         return waiters;
@@ -36,7 +32,14 @@ public class Table {
     public void setWaiters(List<Waiter> waiters) {
         this.waiters = waiters;
     }
-    public Billing geraNotaFiscal(){
-        return this.billing;
+    public void addWaiter(Waiter waiter){
+        this.waiters.add(waiter);
+    }
+    public void removeWaiter(Waiter waiter){
+        if(this.waiters.contains(waiter)){
+        this.waiters.remove(waiter);
+        }else{
+            System.out.println("Garçom não encontrado");
+        }
     }
 }

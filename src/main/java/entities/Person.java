@@ -1,6 +1,6 @@
 package entities;
 
-import accountance.Adress;
+import sets.Address;
 
 public abstract class Person {
 
@@ -9,17 +9,17 @@ public abstract class Person {
     private String cpf;
     private int age;
     private String gender;
-    private Adress adress;
+    private Address address;
     private String email;
 
-    public Person(String name, String phone, int age, String gender, String email, String cpf, Adress adress) {
+    public Person(String name, String phone, int age, String gender, String email, String cpf, Address address) {
         this.name = name;
         this.phone = phone;
         this.age = age;
         this.gender = gender;
         this.email = email;
         this.cpf = cpf;
-        this.adress = adress;
+        this.address = address;
     }
 
     public Person() {
@@ -74,12 +74,12 @@ public abstract class Person {
         this.email = email;
     }
 
-    public Adress getEndereco() {
-        return adress;
+    public Address getEndereco() {
+        return address;
     }
 
-    public void setEndereco(Adress adress) {
-        this.adress = adress;
+    public void setEndereco(Address address) {
+        this.address = address;
     }
 
 

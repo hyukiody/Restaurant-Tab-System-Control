@@ -1,10 +1,8 @@
 package services;
 
-import accountance.Billing;
-import accountance.Order;
+import services.accountance.Billing;
+import services.accountance.Order;
 import platforms.Table;
-
-import java.util.List;
 
 public class Attendance {
 
@@ -16,8 +14,7 @@ public class Attendance {
         this.billing = billing;
         this.order = order;
     }
-    public void viewOngoingAttendances(){
-    }
+
     public void newAttendance(){
 
     }

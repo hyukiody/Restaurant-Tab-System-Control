@@ -1,10 +1,11 @@
 package entities;
 
-import accountance.Adress;
+import sets.Address;
+import sets.Attendant;
 
 public class Deliverer extends Employee implements Attendant {
-    public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Adress adress, int idAuth) {
-        super(name, phone, age, gender, email, cpf, adress, idAuth);
+    public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Address address, int idAuth) {
+        super(name, phone, age, gender, email, cpf, address, idAuth);
     }
 
 

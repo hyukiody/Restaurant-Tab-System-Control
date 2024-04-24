@@ -1,7 +1,8 @@
 package entities;
 
-import accountance.Billing;
-import accountance.Adress;
+import services.accountance.Billing;
+import sets.Address;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +16,15 @@ public class Client extends Person {
                   String phone,
                   int age,
                   String gender,
-                  Adress address,
+                  Address address,
                   String email,
                   String cpf,
-                  Adress adress) {
+                  Address adress) {
     super(name, phone, age, gender, email, cpf,adress);
     this.billHistory = new ArrayList<>();
 
     }
+    public void cadastrarCliente(){}
+
+    public void removerCliente(){}
 }

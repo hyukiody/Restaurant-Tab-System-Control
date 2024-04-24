@@ -1,4 +1,4 @@
-package entities;
+package sets;
 
 public interface Attendant {
     public void performOrder();
