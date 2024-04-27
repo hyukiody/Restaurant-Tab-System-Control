@@ -1,8 +1,9 @@
 package entities;
 
 import sets.Address;
+import sets.Attendant;
 
-public class Deliverer extends entities.Employee implements sets.Employee {
+public class Deliverer extends entities.Employee implements Attendant {
     public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Address address, int idAuth) {
         super(name, phone, age, gender, email, cpf, address, idAuth);
     }

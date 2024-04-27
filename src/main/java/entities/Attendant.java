@@ -2,8 +2,8 @@ package entities;
 
 import sets.Address;
 
-public class Waiter extends entities.Employee implements sets.Employee {
-    public Waiter(String nome, String telefone, int idade, String sexo, String email, String cpf, Address address, int idAutorizacao) {
+public class Attendant extends entities.Employee implements sets.Attendant {
+    public Attendant(String nome, String telefone, int idade, String sexo, String email, String cpf, Address address, int idAutorizacao) {
         super(nome, telefone, idade, sexo, email, cpf, address, idAutorizacao);
     }
 

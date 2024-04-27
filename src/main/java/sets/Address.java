@@ -1,5 +1,7 @@
 package sets;
 
+import java.util.Scanner;
+
 public class Address {
     private String streetAndNumber;
     private String block;
@@ -39,5 +41,18 @@ public class Address {
     @Override
     public String toString(){
         return "Address: " + streetAndNumber + ", " + block + ", " + city + ", " + cep + "\n";
+    }
+    public Address newAddress(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite a rua do novo endereço:");
+        String newStreetAndNumber = sc.nextLine();
+        System.out.println("Digite o bairro do novo endereço:");
+        String newBlock = sc.nextLine();
+        System.out.println("Digite o CEP do novo endereço:");
+        String newCep = sc.nextLine();
+        System.out.println("Digite a cidade do novo endereço:");
+        String newCity = sc.nextLine();
+        sc.close();
+        return new Address(newStreetAndNumber, newBlock, newCity, newCep);
     }
 }

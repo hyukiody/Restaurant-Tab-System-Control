@@ -1,28 +1,27 @@
 package services.accountance;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import entities.Attendant;
 import platforms.Table;
 
-public class Order {
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
+
+public class DeliveryOrder {
     private List<OrderItems> orderItems;
     private Table table;
     private Attendant attendant;
     private double orderValue;
     private LocalDateTime timeOrdered;
     private LocalDateTime timeDelivered;
-    public Order() {}
-    public Order(Table table, Attendant attendant, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
-        this.orderItems = new ArrayList<OrderItems>();
+
+    public DeliveryOrder(List<OrderItems> orderItems, Table table, Attendant attendant, double orderValue, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
+        this.orderItems = orderItems;
         this.table = table;
         this.attendant = attendant;
+        this.orderValue = orderValue;
         this.timeOrdered = timeOrdered;
     }
-
     public List<OrderItems> getOrderItems() {
         return orderItems;
     }
@@ -67,7 +66,7 @@ public class Order {
 
         if(!orderItems.isEmpty()){
             int counter = 1;
-            StringBuilder string = new StringBuilder("--Lista de itens do pedido:\n");
+            StringBuilder string = new StringBuilder("--Lista de itens do pedido de Delivery:\n");
             for (OrderItems orderItems : orderItems) {
                 string.append("---Item n°" + counter + "\n");
                 string.append(orderItems.toString()).append(",\n ");
@@ -79,7 +78,8 @@ public class Order {
             return "Lista de Pedidos vazia.";
         }
     }
-    public void placeOrder(){
+    public void deliverOrder(){
         this.timeDelivered = LocalDateTime.now();
     }
+
 }

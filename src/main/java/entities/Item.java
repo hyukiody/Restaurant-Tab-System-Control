@@ -86,6 +86,7 @@ public class Item implements Comparator<Item> {
     }
 
     public void chooseToRemoveAvailableDays(Item item) {
+        //method for existing item
         Scanner sc = new Scanner(System.in);
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
@@ -164,6 +165,7 @@ public class Item implements Comparator<Item> {
     }
 
     public void chooseToAddAvailableDays(Item item) {
+        //method for existing item
         Scanner sc = new Scanner(System.in);
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
@@ -245,4 +247,5 @@ public class Item implements Comparator<Item> {
     public int compare(Item item1, Item item2) {
         return item1.getName().toUpperCase().compareTo(item2.getName().toUpperCase());
     }
+
 }

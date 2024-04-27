@@ -1,16 +1,16 @@
 package platforms;
 
 import entities.Client;
-import entities.Waiter;
+import entities.Attendant;
 
 import java.util.List;
 
 public class Table {
     private Client client;
-    private List<Waiter> waiters;
+    private List<Attendant> attendants;
     public Table() {
         this.client = null;
-        this.waiters = null;
+        this.attendants = null;
     }
 
     public Client getClient() {
@@ -27,22 +27,22 @@ public class Table {
     public void removeClient(){
         this.client = null;
     }
-    public List<Waiter> getWaiters() {
-        return waiters;
+    public List<Attendant> getWaiters() {
+        return attendants;
     }
-    public void setWaiters(List<Waiter> waiters) {
-        this.waiters = waiters;
+    public void setWaiters(List<Attendant> attendants) {
+        this.attendants = attendants;
     }
-    public void addWaiter(Waiter waiter){
-        if(!this.waiters.contains(waiter)){
-            this.waiters.add(waiter);}
+    public void addWaiter(Attendant attendant){
+        if(!this.attendants.contains(attendant)){
+            this.attendants.add(attendant);}
         else{
             System.out.println("Garçom já adicionado");
         }
     }
-    public void removeWaiter(Waiter waiter){
-        if(this.waiters.contains(waiter)){
-            this.waiters.remove(waiter);
+    public void removeWaiter(Attendant attendant){
+        if(this.attendants.contains(attendant)){
+            this.attendants.remove(attendant);
         }else{
             System.out.println("Garçom não encontrado");
         }
@@ -52,8 +52,8 @@ public class Table {
     }
     public String waitersListToString(){
         String waiters = "";
-        for(Waiter waiter : this.waiters){
-            waiters += waiter.getName() + ", ";
+        for(Attendant attendant : this.attendants){
+            waiters += attendant.getName() + ", ";
         }
         return waiters;
     }
