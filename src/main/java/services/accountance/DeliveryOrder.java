@@ -9,7 +9,6 @@ import java.util.List;
 
 public class DeliveryOrder {
     private List<OrderItems> orderItems;
-    private Table table;
     private Attendant attendant;
     private double orderValue;
     private LocalDateTime timeOrdered;
@@ -17,7 +16,6 @@ public class DeliveryOrder {
 
     public DeliveryOrder(List<OrderItems> orderItems, Table table, Attendant attendant, double orderValue, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
         this.orderItems = orderItems;
-        this.table = table;
         this.attendant = attendant;
         this.orderValue = orderValue;
         this.timeOrdered = timeOrdered;
@@ -32,12 +30,6 @@ public class DeliveryOrder {
     }
     public void removerDoPedido(OrderItems orderItems) {
         this.orderItems.remove(orderItems);
-    }
-    public Table getMesa() {
-        return table;
-    }
-    public void setMesa(Table table) {
-        this.table = table;
     }
     public Attendant getAttendant() {
         return attendant;

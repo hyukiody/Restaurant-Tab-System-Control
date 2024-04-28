@@ -22,7 +22,9 @@ public class Order {
         this.attendant = attendant;
         this.timeOrdered = timeOrdered;
     }
-
+    public Order newOrderToBill(Table table, Attendant attendant, LocalDateTime timeOrdered, LocalDateTime timeDelivered){
+        return 
+    }
     public List<OrderItems> getOrderItems() {
         return orderItems;
     }

@@ -14,6 +14,9 @@ public class Address {
         this.city = city;
         this.cep = cep;
     }
+    public Address(){
+
+    }
     public void setStreetAndNumber(String streetAndNumber) {
         this.streetAndNumber = streetAndNumber;
     }

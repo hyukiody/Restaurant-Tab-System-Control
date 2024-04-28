@@ -88,4 +88,9 @@ public class Menu {
             throw new RuntimeException(e);
         }
     }
+    public void menuMenu(){
+        System.out.println("\n\n1-Exibir cardapio\n2 - Adicionar item ao cardapio \n 3 - Remover item do cardapio\n 4 - Editar Item do Cardapio\n ");
+
+
+    }
 }

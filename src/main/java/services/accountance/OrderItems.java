@@ -31,5 +31,5 @@ public class OrderItems implements Comparator<OrderItems> {
     public String toString(){
         return "----Prato: " + this.getItem().getName() + " - Quantity: "  + this.getQuantity();
     }
-
+    public OrderItems newOrderItems(){}
 }

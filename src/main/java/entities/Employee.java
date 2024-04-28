@@ -1,7 +1,6 @@
 package entities;
 
 import sets.Address;
-import sets.EmployeeList;
 
 public abstract class Employee extends Person {
     private int idAuth;
