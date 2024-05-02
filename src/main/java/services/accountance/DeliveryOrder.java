@@ -1,7 +1,7 @@
 package services.accountance;
 
-import entities.Attendant;
 import platforms.Table;
+import sets.Attendant;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class DeliveryOrder {
     private List<OrderItems> orderItems;
-    private Attendant attendant;
+    private sets.Attendant attendant;
     private double orderValue;
     private LocalDateTime timeOrdered;
     private LocalDateTime timeDelivered;
 
-    public DeliveryOrder(List<OrderItems> orderItems, Table table, Attendant attendant, double orderValue, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
+    public DeliveryOrder(List<OrderItems> orderItems, Table table, sets.Attendant attendant, double orderValue, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
         this.orderItems = orderItems;
         this.attendant = attendant;
         this.orderValue = orderValue;
@@ -31,7 +31,7 @@ public class DeliveryOrder {
     public void removerDoPedido(OrderItems orderItems) {
         this.orderItems.remove(orderItems);
     }
-    public Attendant getAttendant() {
+    public sets.Attendant getAttendant() {
         return attendant;
     }
     public void setAttendant(Attendant attendant) {

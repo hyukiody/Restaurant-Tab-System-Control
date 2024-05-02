@@ -63,6 +63,39 @@ public class Menu {
         }
         return sb.toString();
     }
+    public void menuMenu(){
+        System.out.println("\n\n1-Exibir cardapio\n2 - Adicionar item ao cardapio \n 3 - Remover item do cardapio\n 4 - Editar Item do Cardapio\n ");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        if(choice == 1){
+            System.out.println(this.toString());
+            System.out.println("Pressione V para voltar");
+            String back = sc.nextLine();
+            while(!back.equals("V")){
+                back = sc.nextLine();
+            }
+            menuMenu();
+        }
+        else if(choice ==2){}
+        else if(choice ==3){}
+        else if(choice ==4){}
+
+    }
+
+    public void loadMenu(){
+        menu.clear();
+        try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
+            String line;
+            while((line = reader.readLine())!=null){
+                menu.add(fromString(line));
+
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void saveMenu(){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))){
             for (Item item : menu){
@@ -73,24 +106,5 @@ public class Menu {
             System.out.println("An error occured while saving the menu.");
             e.printStackTrace();
         }
-    }
-    public void loadMenu(){
-        menu.clear();
-        try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
-            String line;
-            while((line = reader.readLine())!=null){
-                menu.add(fromString(line));
-                
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void menuMenu(){
-        System.out.println("\n\n1-Exibir cardapio\n2 - Adicionar item ao cardapio \n 3 - Remover item do cardapio\n 4 - Editar Item do Cardapio\n ");
-
-
     }
 }

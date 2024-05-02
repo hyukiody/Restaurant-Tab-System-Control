@@ -1,14 +1,14 @@
 package platforms;
 
 import entities.Client;
-import entities.Attendant;
+import sets.Attendant;
 
 import java.util.List;
 
 public class Table {
     private int numero;
     private Client client;
-    private List<Attendant> attendants;
+    private List<sets.Attendant> attendants;
 
     public Table() {
         this.client = null;
@@ -39,15 +39,15 @@ public class Table {
         this.client = null;
     }
 
-    public List<Attendant> getAttendants() {
+    public List<sets.Attendant> getAttendants() {
         return attendants;
     }
 
-    public void setAttendants(List<Attendant> attendants) {
+    public void setAttendants(List<sets.Attendant> attendants) {
         this.attendants = attendants;
     }
 
-    public void addAttendants(Attendant attendant) {
+    public void addAttendants(sets.Attendant attendant) {
         if (!this.attendants.contains(attendant)) {
             this.attendants.add(attendant);
         } else {
@@ -55,7 +55,7 @@ public class Table {
         }
     }
 
-    public void removeAttendants(Attendant attendant) {
+    public void removeAttendants(sets.Attendant attendant) {
         if (this.attendants.contains(attendant)) {
             this.attendants.remove(attendant);
         } else {

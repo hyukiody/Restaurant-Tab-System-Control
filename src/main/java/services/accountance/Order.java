@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import entities.Attendant;
 import platforms.Table;
+import sets.Attendant;
 
 public class Order {
     private List<OrderItems> orderItems;
@@ -23,7 +23,7 @@ public class Order {
         this.timeOrdered = timeOrdered;
     }
     public Order newOrderToBill(Table table, Attendant attendant, LocalDateTime timeOrdered, LocalDateTime timeDelivered){
-        return 
+
     }
     public List<OrderItems> getOrderItems() {
         return orderItems;
@@ -42,7 +42,7 @@ public class Order {
     public void setMesa(Table table) {
         this.table = table;
     }
-    public Attendant getAttendant() {
+    public sets.Attendant getAttendant() {
         return attendant;
     }
     public void setAttendant(Attendant attendant) {
