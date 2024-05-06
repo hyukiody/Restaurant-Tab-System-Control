@@ -19,7 +19,7 @@ public class Billing {
 
     public Billing(Client client) {
         this.billOrders = new ArrayList<Order>();
-        this.attendantList = new ArrayList<Attendant>();
+        this.attendantList = new ArrayList<>();
         this.client = client;
         this.totalBillValue = 0;
         this.paymentTime = null;
@@ -129,5 +129,6 @@ public class Billing {
             return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Attendants: " + accessAttendantsList() + "\n Esta nota não possui pedidos. \n";
         }
     }
+    public Billing
 
 }

@@ -7,4 +7,6 @@ public interface Attendant {
 
     public String getName();
 
+    public Attendant registerNewAttendant();
+    public Attendant getAttendant();
 }

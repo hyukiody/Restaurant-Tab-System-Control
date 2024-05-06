@@ -49,36 +49,42 @@ public class Attendance {
     }
     public void menuAttendances(Region region){
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n\n1 - Iniciar novo atendimento\n2 - Continuar atendimento\n3 - Exibir atendimentos em andamento\n 4 - Encerrar atendimento pagamento\n5 - Exibir atendimentos encerrados hoje ");
+        System.out.println("\n\n1 - Iniciar novo atendimento        2 - Continuar atendimento       3 - Exibir atendimentos em andamento\n\n4 - Encerrar atendimento pagamento      5 - Exibir atendimentos encerrados hoje         6- Voltar");
         int choice = sc.nextInt();
-        if(choice == 1){
+        while(choice != 6){
+            if (choice == 1) {
+                System.out.println("\n\n\\n1- Cadastrar novo cliente        2 - Iniciar sem cadastro         3 - Ja possui cadastro\n");
+                int choice12 = sc.nextInt();
 
-            System.out.println("1- Cadastrar novo cliente\n2 - Iniciar sem cadastro\n 3 - Ja possui cadastro");
-            int choice2 = sc.nextInt();
-            if(choice2 ==1){
-                Client client = new Client().registerNewClient();
-                Attendance attendance = newAttenNewClient(region, client);
-                region.addAttendance(attendance);
-                continueAttendance(attendance);
+                if (choice12 == 1) {
+                    Client client = new Client().registerNewClient();
+                    Attendance attendance = newAttenNewClient(region, client);
+                    region.addAttendance(attendance);
+                    continueAttendance(attendance);
+                }
+                if (choice12 == 2) {
+                    Attendance attendance = newAttenNewClient(region, new Client().newUnnamedClient());
+                    region.addAttendance(attendance);
+                    continueAttendance(attendance);
+                }
+                if (choice12 == 3) {
+                }
+
+
             }
-            if(choice2 == 2){}
-            if(choice2 == 3){}
-
-
+            if (choice == 2) {
+                System.out.println("Por favor insira o numero da mesa que deseja continuar o atendimento: ");
+                region.viewOccupiedTables();
+                int tableNumber = sc.nextInt();
+                Table table = region.getTableByNumber(tableNumber);
+                continueAttendance(region.getAttendanceByTable(table));
+            }
+            if (choice == 3) {
+                region.viewOpenAttendances();
+            } else if (choice == 4) {
+            } else if (choice == 5) {
+            }
         }
-        if(choice == 2){
-            System.out.println("Por favor insira o numero da mesa que deseja continuar o atendimento: ");
-            region.viewOccupiedTables();
-            int tableNumber = sc.nextInt();
-            Table table = region.getTableByNumber(tableNumber);
-            continueAttendance(region.getAttendanceByTable(table));
-        }
-        if(choice == 3){
-            region.viewOpenAttendances();
-        }
-        else if(choice == 4){}
-        else if(choice ==5){}
-
 
     }
 
@@ -118,8 +124,8 @@ public class Attendance {
             if (tableNumber < 1 || tableNumber > 10) { // assuming table numbers are from 1 to 10
                 throw new IllegalArgumentException("Numero da mesa invalido. Por favor insira um numero de 1 a 10.");
             }
-
             Table table = region.getTableByNumber(tableNumber);
+
             if (table == null || table.getClient() != null){
                 throw new IllegalArgumentException("Mesa não disponível.");
             }

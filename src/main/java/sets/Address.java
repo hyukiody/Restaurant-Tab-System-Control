@@ -58,4 +58,8 @@ public class Address {
         sc.close();
         return new Address(newStreetAndNumber, newBlock, newCity, newCep);
     }
+
+    public Address unkownAddress() {
+        return new Address("unknown", "unknown", "unknown", "unknown");
+    }
 }

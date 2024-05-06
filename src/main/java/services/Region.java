@@ -10,6 +10,7 @@ public class Region {
     private List<Attendance> attendances;
     private List<Table> tables;
 
+
     public Region() {
         this.attendances = new ArrayList<Attendance>();
         this.tables = new ArrayList<Table>();

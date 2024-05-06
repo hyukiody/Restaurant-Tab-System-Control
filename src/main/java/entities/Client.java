@@ -11,7 +11,7 @@ public class Client extends Person {
     private List<Billing> billHistory;
     public Client(){
         super();
-        this.billHistory = new ArrayList<>();
+        this.billHistory = new ArrayList<Billing>();
         }
     public Client(String name,
                   String phone,
@@ -20,10 +20,13 @@ public class Client extends Person {
                   String email,
                   String cpf,
                   Address address) {
-    super(name, phone, age, gender, email, cpf,address);
-    this.billHistory = new ArrayList<>();
-
+        super(name, phone, age, gender, email, cpf, address);
+        this.billHistory = new ArrayList<Billing>();
     }
+    public Client newUnnamedClient(){
+        return new Client("unknown", "unknown", 0, "unknown", "unknown" ,"unknown", new Address().unkownAddress());
+    }
+
     public Client registerNewClient() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira abaixo os dados do cliente a registrar");
@@ -39,7 +42,7 @@ public class Client extends Person {
         String email = sc.nextLine();
         System.out.println("Insira abaixo o cpf do cliente:  ");
         String cpf = sc.nextLine();
-        System.out.println("Digite a rua do novo endereço:");
+        System.out.println("Digite a rua e numero do novo endereço:");
         String newStreetAndNumber = sc.nextLine();
         System.out.println("Digite o bairro do novo endereço:");
         String newBlock = sc.nextLine();
@@ -51,7 +54,10 @@ public class Client extends Person {
         sc.close();
         return new Client(name, phone,age, gender, email, cpf, address);
     }
-
+    @Override
+    public String toString(){
+        return "Cliente: \nNome: " + getName() + "Telefone: " + getPhone() + "Idade: " + getAge()+ "\nGenero :"+ getGender() +"E-mail:" + getEmail() +"CPF: " + getCpf() + "\nEndereço: "+ getAddress().toString();
+    }
 
 
     public void retrieveClient(){}

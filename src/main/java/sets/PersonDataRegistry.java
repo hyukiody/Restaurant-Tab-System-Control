@@ -6,6 +6,7 @@ import entities.Employee;
 import java.util.List;
 
 public class PersonDataRegistry {
+    private static PersonDataRegistry instance = null;
     private List<Client> clients;
     private List<Employee> employees;
     private String filename= "PersonDataRegistry.txt";
@@ -13,6 +14,12 @@ public class PersonDataRegistry {
     public PersonDataRegistry(){
         this.clients = null;
         this.employees = null;
+    }
+    public static PersonDataRegistry getInstance(){
+        if(instance==null){
+            instance = new PersonDataRegistry();
+        }
+        return instance;
     }
     public Employee findEmployeeByCpf(String cpf){
         for (Employee employee : employees){
@@ -64,6 +71,14 @@ public class PersonDataRegistry {
             }
         }
     }
+    public String viewClientsInRegistry(List<Client> clients){
+    StringBuilder body = new StringBuilder("Clientes cadastrados no registro local: \n" );
+    for(Client client : clients){
+        body.append(client.toString());
+        body.append("\n");
+    }
+    return body.toString();
+}
     //função save e load
     //save: clone, wipe, then list > obj > toString > BufferedWriter > file, then compare to keep or cancel
     //load: new, then  file > bufferedReader > String > parseObject > object > list; compare to keep or cancel
