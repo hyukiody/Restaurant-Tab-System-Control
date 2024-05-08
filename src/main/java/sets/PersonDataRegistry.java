@@ -79,6 +79,20 @@ public class PersonDataRegistry {
     }
     return body.toString();
 }
+public String viewEmployeesInRegistry(List<Employee> employees){
+        StringBuilder body = new StringBuilder("Funcionarios cadastrados no registro local:");
+        if(!employees.isEmpty()){
+            int num =1;
+            for(Employee employee : employees){
+                body.append("\nCadastro n° ").append(num).append(employee.toString());
+                num++;
+            }
+        }
+        else{
+            System.out.println("Não há cadastros no momento.");
+        }
+        return body.toString();
+}
     //função save e load
     //save: clone, wipe, then list > obj > toString > BufferedWriter > file, then compare to keep or cancel
     //load: new, then  file > bufferedReader > String > parseObject > object > list; compare to keep or cancel
