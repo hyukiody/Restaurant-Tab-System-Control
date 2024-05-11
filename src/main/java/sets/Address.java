@@ -14,52 +14,66 @@ public class Address {
         this.city = city;
         this.cep = cep;
     }
-    public Address(){
+
+    public Address() {
 
     }
+
     public void setStreetAndNumber(String streetAndNumber) {
         this.streetAndNumber = streetAndNumber;
     }
+
     public String getStreetAndNumber() {
         return streetAndNumber;
     }
+
     public void setCity(String city) {
         this.city = city;
     }
+
     public String getCity() {
         return city;
     }
+
     public void setBlock(String block) {
         this.block = block;
     }
+
     public String getBlock() {
         return block;
     }
+
     public void setCep(String cep) {
-        this.cep=cep;
+        this.cep = cep;
     }
+
     public String getCep() {
         return cep;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Address: " + streetAndNumber + ", " + block + ", " + city + ", " + cep + "\n";
     }
-    public Address newAddress(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite a rua do novo endereço:");
-        String newStreetAndNumber = sc.nextLine();
-        System.out.println("Digite o bairro do novo endereço:");
-        String newBlock = sc.nextLine();
-        System.out.println("Digite o CEP do novo endereço:");
-        String newCep = sc.nextLine();
-        System.out.println("Digite a cidade do novo endereço:");
-        String newCity = sc.nextLine();
-        sc.close();
-        return new Address(newStreetAndNumber, newBlock, newCity, newCep);
+
+    public Address newAddress() {
+        try (Scanner scAddress = new Scanner(System.in)) {
+            System.out.println("Digite a rua do novo endereço:");
+            String newStreetAndNumber = scAddress.nextLine();
+            System.out.println("Digite o bairro do novo endereço:");
+            String newBlock = scAddress.nextLine();
+            System.out.println("Digite o CEP do novo endereço:");
+            String newCep = scAddress.nextLine();
+            System.out.println("Digite a cidade do novo endereço:");
+            String newCity = scAddress.nextLine();
+            return new Address(newStreetAndNumber, newBlock, newCity, newCep);
+        } catch (Exception e) {
+            System.out.println("An error occurred while creating a new address: " + e.getMessage());
+            return unknownAddress();
+        }
     }
 
-    public Address unkownAddress() {
+    public Address unknownAddress() {
         return new Address("unknown", "unknown", "unknown", "unknown");
     }
 }

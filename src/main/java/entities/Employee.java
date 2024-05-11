@@ -3,11 +3,13 @@ package entities;
 import sets.Address;
 import sets.Attendant;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public abstract class Employee extends Person {
     private int idAuth;
+
     public Employee(List<Employee> employees) {
         super();
         this.idAuth = generateIdAuth(employees);
@@ -29,19 +31,30 @@ public abstract class Employee extends Person {
     }
 
     private int generateIdAuth(List<Employee> employees) {
-        int id;
         boolean exists;
+        int id;
         do {
+            exists=false;
             id = (int) (Math.random() * 1000);
-            exists = employees.stream()
-                    .anyMatch(employee -> employee.getIdAuth() == idAuth);
-        }
-        while (!exists);
+
+
+            for (Employee employee : employees) {
+                if (employee.getIdAuth() == id) {
+                    exists = true;
+                }
+            }
+        } while (exists);
         return id;
     }
 
-@Override
-public String toString() {
-    return "Dados do funcionario:\nName: " + getName() + "\nTelefone: " + getPhone() + "\nAge: " + getAge() + "\nGender: " + getGender() + "\nEmail: " + getEmail() + "\nCPF: " + getCpf() + "\nAddress: " + getAddress().toString() + "\nID: " + getIdAuth();
-}
+    public String getClassName() {
+        return this.getClass().getSimpleName();
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Dados do funcionario:\nName: " + getName() + "\nTelefone: " + getPhone() + "\nAge: " + getAge() + "\nGender: " + getGender() + "\nEmail: " + getEmail() + "\nCPF: " + getCpf() + "\nAddress: " + getAddress().toString() + "\nID: " + getIdAuth();
+    }
 }

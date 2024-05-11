@@ -129,6 +129,6 @@ public class Billing {
             return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Attendants: " + accessAttendantsList() + "\n Esta nota não possui pedidos. \n";
         }
     }
-    public Billing
+   // public Billing
 
 }

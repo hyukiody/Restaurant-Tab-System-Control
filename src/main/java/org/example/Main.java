@@ -15,15 +15,29 @@ import java.util.Scanner;
 public class Main {
 
     public void registerNewEmployee(List<Employee> employees) {
-        Employee employee = null;
         try (Scanner sc = new Scanner(System.in)) {
+
+            System.out.println("Escolha abaixo o tipo de funcionário: \n\n 1 - Garçom         2 - Balconista          3 - Entregador\n");
+
+            // Read and validate choice (avoiding potential NoSuchElementException)
+            int choice2;
+            do {
+                while (!sc.hasNextInt()) {
+                    System.out.println("Entrada inválida. Digite um número (1, 2, ou 3): ");
+                    sc.nextLine(); // consume invalid input
+                }
+                choice2 = sc.nextInt();
+                sc.nextLine(); // consume newline after integer input
+            } while (choice2 < 1 || choice2 > 3); // validate choice range
+
+            // Collect employee details
             System.out.println("Insira o nome do funcionario:");
             String nome = sc.nextLine();
             System.out.println("Insira o telefone do funcionario:");
             String fone = sc.nextLine();
             System.out.println("Insira a idade do funcionario:");
             int idade = sc.nextInt();
-            sc.nextLine(); // consume newline left-over
+            sc.nextLine(); // consume newline after integer input
             System.out.println("Insira o genero do funcionario: ");
             String sexo = sc.nextLine();
             System.out.println("Insira o email do funcionario:");
@@ -31,21 +45,22 @@ public class Main {
             System.out.println("Insira o CPF do funcionario");
             String cpf = sc.nextLine();
             Address address = new Address().newAddress();
-            while(employee==null){
-                System.out.println("Agora selecione abaixo o tipo de funcionário: \n\n 1 - Garçom         2 - Balconista          3 - Entregador");
-                int choice = sc.nextInt();
-                if (choice == 1) {
-                    employee = new Waiter(nome, fone, idade, sexo, email, cpf, address, employees);
-                } else if (choice == 2) {
-                    employee = new Clerk(nome, fone, idade, sexo, email, cpf, address, employees);
-                } else if (choice == 3) {
-                    employee = new Deliverer(nome, fone, idade, sexo, email, cpf, address, employees);
-                } else {
-                    System.out.println("Entrada invalida; tente novamente");
-                }
-            }
+            System.out.println(address.toString());
+
+            // Create employee object based on choice
+
+            Employee employee = switch (choice2) {
+                case 1 -> new Waiter(nome, fone, idade, sexo, email, cpf, address, employees);
+                case 2 -> new Clerk(nome, fone, idade, sexo, email, cpf, address, employees);
+                case 3 -> new Deliverer(nome, fone, idade, sexo, email, cpf, address, employees);
+                default -> throw new IllegalStateException("Unexpected value: " + choice2);
+            };
+
+            // Handle successful registration (if employee is created)
+            System.out.println("Novo " + employee.getClassName() + " registrado: " + employee.toString());
+            return;
         } catch (InputMismatchException e) {
-            System.out.println("Entrada invalida, por favor tente novamente.");
+            System.out.println("Entrada inválida. Digite um número (1, 2, ou 3): " + e.getMessage());
         }
     }
 
@@ -53,21 +68,20 @@ public class Main {
         System.out.println("\n\n            1 - Cadastrar Funcionarios          2 - Exibir funcionarios cadastrados              3 - Relatorios anteriores               4 - Realizar fechamento diario \n\n 5 - Voltar");
         try (Scanner sc = new Scanner(System.in)) {
             int admChoice = sc.nextInt();
-            sc.nextLine();
 
             if (admChoice == 1) {
                 registerNewEmployee(localRegistry.getEmployeesList());
             } else if (admChoice == 2) {
                 viewEmployeesInLocalRegistry(localRegistry);
+                menuAdm(localRegion, localRegistry);
             } else if (admChoice == 3) {
-                viewPastDailyReports(){};
+                viewPastDailyReports();
                 //read and display history of attendances saved at pc files
             } else if (admChoice == 4) {
-                closeDayAttendances(localRegion.getAttendances()){};//PENDING
+                // closeDayAttendances(localRegion.getAttendances()){};//PENDING
                 // generating daily reports and saving to local file for further loading
             } else if (admChoice == 5) {
-                menuPrincipal(localRegion, localRegistry);
-
+                return;
             }
         }
     }
@@ -83,27 +97,37 @@ public class Main {
     }
 
     public void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry) {
-        System.out.println("--Menu Principal--\n1 - Atendimentos\n2 - Cardapio\n3 - Entregas\n4 - Cadastros e Registros\n 5 - Sair");
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        sc.nextLine();
-        while (choice != 5) {
-            switch (choice) {
-                case 1:
-                    menuAttendances();
-                case 2:
-                    menuMenu();
-                case 3:
-                    menuDeliveries();
-                case 4:
-                    menuAdm(localRegion,localRegistry);
-                case 5:
-                    break;
-            }
+
+        try (Scanner sc = new Scanner(System.in)) {
+            int choice;
+            do {
+                System.out.println("--Menu Principal--\n1 - Atendimentos\n2 - Cardapio\n3 - Entregas\n4 - Cadastros e Registros\n 5 - Sair");
+                choice = sc.nextInt();
+                sc.nextLine();
+                switch (choice) {
+                    case 1:
+                        menuAttendances();
+                        break;
+                    case 2:
+                        menuMenu();
+                        break;
+                    case 3:
+                        menuDeliveries();
+                        break;
+                    case 4:
+                        menuAdm(localRegion, localRegistry);
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        System.out.println("Escolha invalida. Tente novamente.");
+                }
+            }while (choice != 5);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada invalida. Tente novamente");
+        } catch (Exception e) {
+            System.out.println("Um erro ocorreu: " + e.getMessage());
         }
-
-
-        sc.close();
     }
 
     private void menuAttendances() {
@@ -118,6 +142,7 @@ public class Main {
     public void main(String[] args) {
         Region localRegion = new Region();
         PersonDataRegistry localRegistry = new PersonDataRegistry();
-        menuPrincipal(localRegion,localRegistry);
+
+        menuPrincipal(localRegion, localRegistry);
     }
 }

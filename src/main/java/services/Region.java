@@ -69,7 +69,7 @@ public class Region {
     }
     public Attendance getAttendanceByTable(Table table){
         for(Attendance attendance : this.attendances){
-            if(attendance.getTable().equals(table){
+            if(attendance.getTable().equals(table)){
                 return attendance;
             }
         }

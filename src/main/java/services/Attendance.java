@@ -91,7 +91,7 @@ public class Attendance {
     private void continueAttendance(Attendance attendance) {
         if(attendance.getTable().getAttendants().isEmpty()){
             System.out.println("Por favor adicione um garçom ao atendimento");
-            attendance.getTable().addAttendants();
+            //attendance.getTable().addAttendants();
         }
         System.out.println(attendance.toString());
         System.out.println("1 - Adicionar item ao pedido\n2 - Remover item do pedido\n3 - Encerrar atendimento\n4 - Adicionar garçom ao atendimento\n5 - Remover garçom do atendimento");
