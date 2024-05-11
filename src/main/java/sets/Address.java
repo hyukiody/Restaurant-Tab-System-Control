@@ -1,5 +1,6 @@
 package sets;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Address {
@@ -67,9 +68,12 @@ public class Address {
             System.out.println("Digite a cidade do novo endereço:");
             String newCity = scAddress.nextLine();
             return new Address(newStreetAndNumber, newBlock, newCity, newCep);
-        } catch (Exception e) {
+        }catch(InputMismatchException e){
+            System.out.println("Entrada invalida; tente novamente.");
+            throw new InputMismatchException();
+        }catch (Exception e) {
             System.out.println("An error occurred while creating a new address: " + e.getMessage());
-            return unknownAddress();
+            throw new IllegalArgumentException();
         }
     }
 

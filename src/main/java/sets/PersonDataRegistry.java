@@ -91,7 +91,7 @@ public class PersonDataRegistry {
         if (!employees.isEmpty()) {
             int num = 1;
             for (Employee employee : employees) {
-                body.append("\nCadastro n° ").append(num).append(employee.toString());
+                body.append("\nCadastro n° - ").append(num).append(employee.toString());
                 num++;
             }
         } else {

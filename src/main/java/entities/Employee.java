@@ -55,6 +55,6 @@ public abstract class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Dados do funcionario:\nName: " + getName() + "\nTelefone: " + getPhone() + "\nAge: " + getAge() + "\nGender: " + getGender() + "\nEmail: " + getEmail() + "\nCPF: " + getCpf() + "\nAddress: " + getAddress().toString() + "\nID: " + getIdAuth();
+        return " Dados do funcionario:\nName: " + getName() + "         Telefone: " + getPhone() + "\nAge: " + getAge() + "         Gender: " + getGender() + "\nEmail: " + getEmail() + "          CPF: " + getCpf() + "\nAddress: " + getAddress().toString() + "             ID: " + getIdAuth();
     }
 }
