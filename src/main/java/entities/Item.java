@@ -85,15 +85,16 @@ public class Item implements Comparator<Item> {
         return sb.toString();
     }
 
-    public void chooseToRemoveAvailableDays(Item item) {
+    public void chooseToRemoveAvailableDays(Item item, Scanner scanner) {
         //method for existing item
-        Scanner sc = new Scanner(System.in);
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
         System.out.println("Escolha o dia a ser removido:");
         System.out.println("1- Domingo \n 2- Segunda \n 3- Terça \n 4- Quarta \n 5- Quinta \n 6-Sexta \n 7- Sábado");
         System.out.println("0- Sair");
-        int choice = sc.nextInt();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
         while (choice != 0) {
             try {
                 if (item.availableDays.contains(Days.values()[choice - 1].toString()) == true) {
@@ -105,74 +106,21 @@ public class Item implements Comparator<Item> {
                 System.out.println("Opção inválida");
             }
 
-        /*
-        switch (choice) {
-            case 1:
-                if (availableDays.contains("Domingo") == true) {
-                    availableDays.remove("Domingo");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 2:
-                if (availableDays.contains("Segunda") == true) {
-                    availableDays.remove("Segunda");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 3:
-                if (availableDays.contains("Terca") == true) {
-                    availableDays.remove("Terca");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 4:
-                if (availableDays.contains("Quarta") == true) {
-                    availableDays.remove("Quarta");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 5:
-                if (availableDays.contains("Quinta") == true) {
-                    availableDays.remove("Quinta");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 6:
-                if (availableDays.contains("Sexta") == true) {
-                    availableDays.remove("Sexta");
-                    break;
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 7:
-                if (availableDays.contains("Sabado") == true) {
-                    availableDays.remove("Sabado");
-                    break;
-                } else {
-                    System.out.println("Não consta para remover.");
-                }
-        }
-        */
-            sc.close();
+
 
         }
 
     }
 
-    public void chooseToAddAvailableDays(Item item) {
+    public void chooseToAddAvailableDays(Item item, Scanner scanner) {
         //method for existing item
-        Scanner sc = new Scanner(System.in);
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
         System.out.println("Escolha o dia a adicionar para o item: ");
         System.out.println("1- Domingo \n 2- Segunda \n 3- Terça \n 4- Quarta \n 5- Quinta \n 6-Sexta \n 7- Sábado");
         System.out.println("0- Sair");
-        int choice = sc.nextInt();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
         while (choice != 0) {
             try {
                 if (!item.availableDays.contains(Days.values()[choice - 1].toString())) {
@@ -221,6 +169,7 @@ public class Item implements Comparator<Item> {
                 } else {
                     System.out.println("Dia já adicionado");
                 }
+
             case 6:
                 if (!availableDays.contains("Sexta") == true) {
                     availableDays.add("Sexta");
@@ -242,7 +191,6 @@ public class Item implements Comparator<Item> {
                 throw new IllegalStateException("Unexpected value: " + choice);
                 */
         }
-        sc.close();
     }
     public int compare(Item item1, Item item2) {
         return item1.getName().toUpperCase().compareTo(item2.getName().toUpperCase());

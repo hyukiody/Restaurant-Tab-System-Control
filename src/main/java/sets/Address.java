@@ -57,16 +57,16 @@ public class Address {
         return "Address: " + streetAndNumber + ", " + block + ", " + city + ", " + cep + "\n";
     }
 
-    public Address newAddress() {
-        try (Scanner scAddress = new Scanner(System.in)) {
+    public Address newAddress(Scanner scanner) {
+        try {
             System.out.println("Digite a rua do novo endereço:");
-            String newStreetAndNumber = scAddress.nextLine();
+            String newStreetAndNumber = scanner.nextLine();
             System.out.println("Digite o bairro do novo endereço:");
-            String newBlock = scAddress.nextLine();
+            String newBlock = scanner.nextLine();
             System.out.println("Digite o CEP do novo endereço:");
-            String newCep = scAddress.nextLine();
+            String newCep = scanner.nextLine();
             System.out.println("Digite a cidade do novo endereço:");
-            String newCity = scAddress.nextLine();
+            String newCity = scanner.nextLine();
             return new Address(newStreetAndNumber, newBlock, newCity, newCep);
         }catch(InputMismatchException e){
             System.out.println("Entrada invalida; tente novamente.");
