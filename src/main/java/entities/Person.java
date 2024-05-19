@@ -1,7 +1,5 @@
 package entities;
 
-import sets.Address;
-
 public abstract class Person {
 
     private String name;

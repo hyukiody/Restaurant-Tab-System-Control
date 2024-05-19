@@ -1,6 +1,5 @@
-package services;
+package platforms;
 
-import platforms.Table;
 import sets.TablesList;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 public class Region {
     private List<Attendance> attendances;
     private List<Table> tables;
-
+    private List<Attendance> attendanceHistory = new ArrayList<>();
 
     public Region() {
         this.attendances = new ArrayList<Attendance>();
@@ -50,7 +49,11 @@ public class Region {
 
         this.attendances.add(attendance);
     }
+    public void endAttendance(Attendance attendance){
+        if("Paid".equals(attendance.getBilling().getPaymentStatus())){
 
+        }
+    }
     public void viewAvailableTables() {
         for(Table table : this.tables){
             if(table.getClient()==null){

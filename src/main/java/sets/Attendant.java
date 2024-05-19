@@ -1,12 +1,15 @@
 package sets;
 
+import java.util.List;
+
 public interface Attendant {
-    public void performOrder();
-    public void scheduleOrder();
-    public void deliverOrder();
+    String getName();
 
-    public String getName();
+    static void registerNewAttendant(List<Attendant> attendants, Attendant attendant) {
+        attendants.add(attendant);
+    }
 
-    public Attendant registerNewAttendant();
-    public Attendant getAttendant();
+    Attendant getAttendant();
+
+    int getId();
 }

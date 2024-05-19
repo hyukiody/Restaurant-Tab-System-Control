@@ -1,11 +1,13 @@
 package services.accountance;
 
+import entities.Employee;
 import sets.Attendant;
 import entities.Client;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Billing {
 
@@ -16,27 +18,34 @@ public class Billing {
     private LocalDateTime paymentTime;
     private String PaymentStatus;
     private int billId;
+    private int billingStatus;
 
-    public Billing(Client client) {
-        this.billOrders = new ArrayList<Order>();
-        this.attendantList = new ArrayList<>();
-        this.client = client;
-        this.totalBillValue = 0;
-        this.paymentTime = null;
-        this.PaymentStatus = "Paid";
-        this.billId = (int) (Math.random() * 1000);
-    }
-
-    public Billing(Client client, LocalDateTime paymentTime, String PaymentStatus) {
+    public Billing(Client client,List<Billing> pastBillings) {
         this.billOrders = new ArrayList<Order>();
         this.attendantList = new ArrayList<Attendant>();
         this.client = client;
         this.totalBillValue = 0;
-        this.paymentTime = paymentTime;
-        this.PaymentStatus = PaymentStatus;
-        this.billId = (int) (Math.random() * 1000);
+        this.paymentTime = null;
+        this.billingStatus = 0;
+        this.billId = generateBillId(pastBillings);
     }
+    private int generateBillId(List<Billing> billings){
+        boolean exists;
+        int id;
+        do {
+            exists=false;
+            id = (int) (Math.random() * 1000000);
 
+
+            for (Billing billing : billings) {
+                if (billing.getBillId() == id) {
+                    exists = true;
+                }
+            }
+        } while (exists || id==0);
+        return id;
+
+    }
     public List<Order> getBillOrders() {
         return billOrders;
     }
@@ -49,14 +58,25 @@ public class Billing {
         this.billOrders.add(order);
         setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum()); //each time an order is added, it recalculates the total value of the bill
     }
-
-    public void removeOrder(Order order) {
-        this.billOrders.remove(order);
+   public void removeOrderFromBilling(Scanner scanner){
+    System.out.println("POR FAVOR INSIRA O NUMERO DO PEDIDO A REMOVER");
+    int index = scanner.nextInt();
+    scanner.nextLine();
+    if (index >= 1 && index <= billOrders.size()) {
+        this.billOrders.remove(index - 1);
         if (this.billOrders.isEmpty()) {
             setPaymentStatus("Paid");
         }
-        setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum()); //each time an order is removed, it recalculates the total value of the bill
+        recalculateTotalBillValue();
+    } else {
+        throw new IndexOutOfBoundsException("Valor fora do alcance.");
     }
+}
+
+
+private void recalculateTotalBillValue() {
+    setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum());
+}
 
     public Client getClient() {
         return client;
@@ -66,7 +86,7 @@ public class Billing {
         this.client = client;
     }
 
-    public String accessAttendantsList() {
+    public String AttendantsListToString() {
         StringBuilder body = new StringBuilder("List de atendentes: \n");
         for (Attendant attendant : this.attendantList) {
             body.append(attendant.getName() + ", ");
@@ -81,10 +101,28 @@ public class Billing {
     public void addAttendant(Attendant attendant) {
         this.attendantList.add(attendant);
     }
-    public double getTotalBillValue(){
+
+    public void setAttendantList(List<Attendant> attendants) {
+        this.attendantList = attendants;
+    }
+
+    public void updateBillAttendantsFromOrders() {
+        List<Attendant> newUpdate = new ArrayList<>();
+        if (!this.getBillOrders().isEmpty()) {
+            for (Order order : this.getBillOrders()) {
+                newUpdate.add(order.getAttendant());
+            }
+            this.setAttendantList(newUpdate);
+        } else if (this.getBillOrders().isEmpty()) {
+            this.setAttendantList(new ArrayList<>());
+        }
+    }
+
+    public double getTotalBillValue() {
         return totalBillValue;
     }
-    public void setTotalBillValue(double totalBillValue){
+
+    public void setTotalBillValue(double totalBillValue) {
         this.totalBillValue = totalBillValue;
     }
     /*public double getTotalBillValue() {
@@ -97,7 +135,7 @@ public class Billing {
         return paymentTime;
     }
 
-    public void makePayment(LocalDateTime paymentTime) {
+    public void makePayment() {
         setPaymentStatus("Paid");
         this.paymentTime = LocalDateTime.now();
     }
@@ -113,12 +151,19 @@ public class Billing {
     public int getBillId() {
         return billId;
     }
-
+    @Override
     public String toString() {
 
         if (!billOrders.isEmpty()) {
             int counter = 1;
-            StringBuilder body = new StringBuilder("Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Attendants: " + accessAttendantsList() + ", Valor Total: " + getTotalBillValue() + ", Hora Gerada: " + getPaymentTime() + "\n Pedidos da Nota: \n");
+            StringBuilder body =
+                    new StringBuilder(new StringBuilder()
+                    .append("Nota Fiscal: ID: ").append(getBillId())
+                    .append(", \nClient: ").append(client.getName())
+                    .append(", \nAttendants: ").append(AttendantsListToString())
+                    .append(", \nValor Total: ").append(getTotalBillValue())
+                    .append(", \nHora Gerada: ").append(getPaymentTime())
+                    .append("\n Pedidos da Nota: \n").toString());
             for (Order order : billOrders) {
                 body.append("-Pedido N°").append(counter + "\n");
                 body.append(order.toString());
@@ -126,9 +171,9 @@ public class Billing {
             }
             return body.toString();
         } else {
-            return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Attendants: " + accessAttendantsList() + "\n Esta nota não possui pedidos. \n";
+            return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + ", Attendants: " + AttendantsListToString() + "\n Esta nota não possui pedidos. \n";
         }
     }
-   // public Billing
+    // public Billing
 
 }

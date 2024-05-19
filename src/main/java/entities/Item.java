@@ -85,7 +85,7 @@ public class Item implements Comparator<Item> {
         return sb.toString();
     }
 
-    public void chooseToRemoveAvailableDays(Item item, Scanner scanner) {
+    public static void chooseToRemoveAvailableDays(Item item, Scanner scanner) {
         //method for existing item
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
@@ -112,7 +112,7 @@ public class Item implements Comparator<Item> {
 
     }
 
-    public void chooseToAddAvailableDays(Item item, Scanner scanner) {
+    public static void chooseToAddAvailableDays(Item item, Scanner scanner) {
         //method for existing item
         System.out.println("Dias registrados: ");
         System.out.println(item.getToStringAvailableDays());
@@ -131,65 +131,6 @@ public class Item implements Comparator<Item> {
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Opção inválida");
             }
-
-
-        /*switch (choice) {
-            case 1:
-                if (!availableDays.contains("Domingo")) {
-                    availableDays.add("Domingo");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 2:
-                if (!(availableDays.contains("Segunda") == true)) {
-                    availableDays.add("Segunda");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 3:
-                if (!availableDays.contains("Terca")) {
-                    availableDays.add("Terca");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 4:
-                if (!availableDays.contains("Quarta")) {
-                    availableDays.add("Quarta");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 5:
-                if (!availableDays.contains("Quinta") == true) {
-                    availableDays.add("Quinta");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-
-            case 6:
-                if (!availableDays.contains("Sexta") == true) {
-                    availableDays.add("Sexta");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-
-                }
-            case 7:
-                if (!availableDays.contains("Sabado") == true) {
-                    availableDays.add("Sabado");
-                    System.out.println("Dia adicionado");
-                } else {
-                    System.out.println("Dia já adicionado");
-                }
-            case 0:
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + choice);
-                */
         }
     }
     public int compare(Item item1, Item item2) {

@@ -1,6 +1,5 @@
 package entities;
 
-import sets.Address;
 import sets.Attendant;
 
 import java.util.List;
@@ -10,36 +9,19 @@ public class Deliverer extends entities.Employee implements Attendant {
         super(name, phone, age, gender, email, cpf, address, employees);
     }
 
-
-
     @Override
-    public void performOrder() {
-
+    public String getName(){
+        return this.getName();
     }
 
-    @Override
-    public void scheduleOrder() {
-
-    }
-
-    @Override
-    public void deliverOrder() {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public Attendant registerNewAttendant() {
-        return null;
-    }
 
     @Override
     public Attendant getAttendant() {
         return null;
+    }
+
+    public int getId() {
+        return this.getIdAuth();
     }
 
 

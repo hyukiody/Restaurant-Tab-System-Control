@@ -1,4 +1,4 @@
-package sets;
+package entities;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

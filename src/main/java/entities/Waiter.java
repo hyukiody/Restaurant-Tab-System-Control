@@ -1,10 +1,8 @@
 package entities;
 
-import sets.Address;
 import sets.Attendant;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Waiter extends entities.Employee implements sets.Attendant {
 
@@ -14,33 +12,21 @@ public class Waiter extends entities.Employee implements sets.Attendant {
     }
 
     @Override
-    public void performOrder() {
-
-    }
-
-    @Override
-    public void scheduleOrder() {
-
-    }
-
-    @Override
-    public void deliverOrder() {
-
-    }
-    @Override
     public String getName(){
-        return null;
+        return this.getName();
     }
 
-    @Override
-    public Attendant registerNewAttendant() {
-        return null;
-    }
+
 
 
     @Override
     public Attendant getAttendant() {
         return this;
+    }
+
+    @Override
+    public int getId() {
+        return this.getIdAuth();
     }
 
 }

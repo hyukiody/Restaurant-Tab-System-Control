@@ -3,6 +3,7 @@ package platforms;
 import entities.Client;
 import sets.Attendant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
@@ -11,8 +12,8 @@ public class Table {
     private List<sets.Attendant> attendants;
 
     public Table() {
-        this.client = null;
-        this.attendants = null;
+        this.client = new Client().newUnnamedClient();
+        this.attendants = new ArrayList<Attendant>();
     }
 
     public int getNumero() {
@@ -71,7 +72,7 @@ public class Table {
     public String waitersListToString() {
         String waiters = "";
         for (Attendant attendant : this.attendants) {
-            waiters += attendant.getName() + ", ";
+            waiters += attendant.getName() + ", " + "Id: " + attendant.getId();
         }
         return waiters;
     }

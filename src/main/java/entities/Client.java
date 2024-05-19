@@ -1,15 +1,12 @@
 package entities;
 
 import services.accountance.Billing;
-import sets.Address;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Client extends Person {
     private List<Billing> billHistory;
+
     public Client(){
         super();
         this.billHistory = new ArrayList<Billing>();
@@ -28,38 +25,44 @@ public class Client extends Person {
         return new Client("unknown", "unknown", 0, "unknown", "unknown" ,"unknown", new Address().unknownAddress());
     }
 
-    public Client registerNewClient() {
+    public Client registerNewClient(List<Client> clients,Scanner scanner) {
         Client client = null;
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             System.out.println("Insira abaixo os dados do cliente a registrar");
             System.out.println("Insira o nome do cliente a registrar:  ");
-            String name = sc.nextLine();
+            String name = scanner.nextLine();
             System.out.println("Insira o telefone:  ");
-            String phone = sc.nextLine();
+            String phone = scanner.nextLine();
             System.out.println("Insira abaixo a idade do cliente:  ");
-            int age = sc.nextInt();
-            sc.nextLine();
+            int age = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Insira abaixo o sexo do cliente: F/ M / N (Não Binario)");
-            String gender = sc.nextLine();
+            String gender = scanner.nextLine();
             System.out.println("Insira abaixo o email do cliente:  ");
-            String email = sc.nextLine();
-            System.out.println("Insira abaixo o cpf do cliente:  ");
-            String cpf = sc.nextLine();
-            System.out.println("Digite a rua e numero do novo endereço:");
-            String newStreetAndNumber = sc.nextLine();
-            System.out.println("Digite o bairro do novo endereço:");
-            String newBlock = sc.nextLine();
-            System.out.println("Digite o CEP do novo endereço:");
-            String newCep = sc.nextLine();
-            System.out.println("Digite a cidade do novo endereço:");
-            String newCity = sc.nextLine();
-            Address address = new Address(newStreetAndNumber, newBlock, newCep, newCity);
-            sc.close();
+            String email = scanner.nextLine();
+            boolean cpfCheck;
+            String cpf;
+            do {
+                System.out.println("Insira abaixo o cpf do cliente:  ");
+                cpf = scanner.nextLine();
+                cpfCheck = false;
+                for (Client clientCheck : clients) {
+                    if (clientCheck.getCpf() == cpf) {
+                        System.out.println("CPF de Cliente já encontrado; por favor verifique e tente novamente.");
+                        cpfCheck = true;
+                    }
+                }
+            } while (cpfCheck);
+
+            Address address = new Address().newAddress(scanner);
             client = new Client(name, phone, age, gender, email, cpf, address);
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter the correct data type.");
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
+        }if(client!=null){
+            clients.add(client);
+            Collections.sort(clients, Comparator.comparing(Client::getName));
         }
         return client;
     }
