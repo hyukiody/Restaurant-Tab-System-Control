@@ -11,13 +11,6 @@ public class Waiter extends entities.Employee implements sets.Attendant {
 
     }
 
-    @Override
-    public String getName(){
-        return this.getName();
-    }
-
-
-
 
     @Override
     public Attendant getAttendant() {

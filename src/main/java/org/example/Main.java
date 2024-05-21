@@ -3,8 +3,7 @@ package org.example;
 import platforms.Attendance;
 import platforms.Region;
 import services.Menu;
-import services.accountance.Billing;
-import sets.AttendanceHistory;
+import sets.BillingHistory;
 import sets.PersonDataRegistry;
 
 import java.util.*;
@@ -13,7 +12,7 @@ import static platforms.Attendance.menuAttendances;
 
 public class Main {
 
-    private static void menuAdm(Region localRegion, PersonDataRegistry localRegistry,List<Billing> pastBillings, Scanner scanner) {
+    private static void menuAdm(Region localRegion, PersonDataRegistry localRegistry, BillingHistory pastBillings, Scanner scanner) {
 
         try {
             int admChoice;
@@ -77,7 +76,7 @@ public class Main {
         System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
     }
 
-    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, List<Billing> pastBillings, Scanner scanner) {
+    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, BillingHistory pastBillings, Scanner scanner) {
 
         try {
             int menuChoice;
@@ -145,10 +144,10 @@ public class Main {
         Region localRegion = new Region();
         PersonDataRegistry localRegistry = new PersonDataRegistry();
         Menu localMenu = new Menu();
-        AttendanceHistory pastAttendances = new AttendanceHistory();
+        BillingHistory billingHistory = new BillingHistory();
         Scanner sc = new Scanner(System.in);
         try {
-            menuPrincipal(localRegion, localRegistry, localMenu, pastAttendances.getPastBillings() ,sc);
+            menuPrincipal(localRegion, localRegistry, localMenu, billingHistory ,sc);
         } catch (Exception e) {
             System.out.println("Ocorreu um erro 11" + e.getMessage());
             e.printStackTrace();

@@ -18,6 +18,8 @@ public class Order {
 
     public Order() {
         this.timeOrdered = LocalDateTime.now();
+        this.orderItems = new ArrayList<OrderItems>();
+
     }
 
     public Order(Table table, Attendant attendant, LocalDateTime timeOrdered, LocalDateTime timeDelivered) {
@@ -106,6 +108,7 @@ public class Order {
         int quantitySelection;
         int verificatorChoice;
         boolean verificator = true;
+        OrderItems newOrderItem;
         Order newOrder = new Order();
         try {
             System.out.println("POR FAVOR SELECIONE UM ATENDENTE DA MESA PARA O PEDIDO");
@@ -122,7 +125,7 @@ public class Order {
                 System.out.println("POR FAVOR, INSIRA A QUANTIDADE DO  ITEM SELECIONADO, NO PEDIDO");
                 quantitySelection = scanner.nextInt();
                 scanner.nextLine();
-                OrderItems newOrderItem = new OrderItems(menu.findItemById(idSelection, menu), quantitySelection);
+                newOrderItem = new OrderItems(Menu.findItemById(idSelection, menu), quantitySelection);
                 newOrder.addToOrder(newOrderItem);
 
                 System.out.println("GOSTARIA DE ADICIONAR MAIS ITEMS AO PEDIDO?\n SELECIONE             1- SIM              2- NÃO");
@@ -132,8 +135,8 @@ public class Order {
                     case 1:
                         break;
                     case 2:
-                        verificator = false;
-                        break;
+                        return newOrder;
+
                     default:
                         throw new IllegalStateException("Unexpected value: " + verificatorChoice);
                 }
@@ -142,9 +145,8 @@ public class Order {
             System.out.println("Entrada Invalida. Por favor insira um numero.");
         } catch (NullPointerException e) {
             System.out.println("Ocorreu um erro. Por favor verifique.");
+            e.getMessage();
         }
-
-        return newOrder;
+    return null;
     }
-
 }

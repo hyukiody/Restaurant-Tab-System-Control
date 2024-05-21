@@ -12,7 +12,7 @@ public class Table {
     private List<sets.Attendant> attendants;
 
     public Table() {
-        this.client = new Client().newUnnamedClient();
+        this.client = null;
         this.attendants = new ArrayList<Attendant>();
     }
 
@@ -78,7 +78,10 @@ public class Table {
     }
 
     public String getTableInfo() {
-        return "Cliente da mesa: " + this.client.getName() + "\nGarçons da mesa: " + waitersListToString();
+        return "Informações da Mesa n°:  " + this.getNumero() + " \nCliente da mesa: " + this.client.getName() + "\nGarçons da mesa: " + waitersListToString() + "\n";
     }
-
+    public void cleanTable(Table table){
+        table.setClient(null);
+        table.setAttendants(new ArrayList<Attendant>());
+    }
 }
