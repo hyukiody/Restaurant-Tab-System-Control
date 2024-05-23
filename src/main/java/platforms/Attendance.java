@@ -22,18 +22,19 @@ public class Attendance {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public Attendance(Table table, Client client, List<Billing> pastBillings) {
+    public Attendance(List<Attendance> localAttendances, Table table, Client client, List<Billing> pastBillings) {
         this.table = table;
         this.billing = new Billing(client, pastBillings);
         this.startTime = LocalDateTime.now();
+        localAttendances.add(this);
     }
 
     public LocalDateTime getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
     public Billing getBilling() {
-        return billing;
+        return this.billing;
     }
 
     public void setBilling(Billing billing) {
@@ -41,7 +42,7 @@ public class Attendance {
     }
 
     public Table getTable() {
-        return table;
+        return this.table;
     }
 
     public void setTable(Table table) {
@@ -56,13 +57,12 @@ public class Attendance {
     }
 
 
-
-@Override
-public String toString() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    String formattedStartTime = this.startTime.format(formatter);
-    return "Atendimento Iniciado em: " + formattedStartTime + "\n Mesa:" + this.table.getTableInfo() + "\n " + this.billing.toString();
-}
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedStartTime = this.startTime.format(formatter);
+        return "Atendimento Iniciado em: " + formattedStartTime + "\n Mesa:" + this.table.getTableInfo() + "\n " + this.billing.toString();
+    }
 
 
     public static void menuAttendances(Region localRegion, PersonDataRegistry localRegistry, Menu menu, BillingHistory pastBillings, Scanner scanner) {
@@ -83,21 +83,30 @@ public String toString() {
                     int choice12 = scanner.nextInt();
                     scanner.nextLine();
                     Attendance attendance;
+                    Client client;
                     switch (choice12) {
                         case 1:
-                            Client client = new Client().registerNewClient(localRegistry.getClientsList(), scanner);
-                            attendance = newAttenNewClient(localRegion, client, pastBillings, scanner);
-                            localRegion.addAttendance(attendance);
+                            client = new Client().registerNewClient(localRegistry.getClientsList(), scanner);
+                            attendance = newAttenGivenClient(localRegion, client, pastBillings, scanner);
                             continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                             break;
                         case 2:
-                            attendance = newAttenNewClient(localRegion, new Client().newUnnamedClient(), pastBillings, scanner);
-                            localRegion.addAttendance(attendance);
+                            attendance = newAttenGivenClient(localRegion, new Client().newUnnamedClient(), pastBillings, scanner);
                             continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                             break;
                         case 3:
+                            System.out.println(localRegistry.viewClientsInRegistry());
+                            System.out.println("INSIRA O CPF DO CLIENTE JÁ CADASTRADO");
+                            String cpfInput = scanner.nextLine();
+                            cpfInput = cpfInput.replaceAll("\\D+", "");
+                            client = localRegistry.findClientByCpf(cpfInput);
+                            attendance = newAttenGivenClient(localRegion, client, pastBillings, scanner);
+                            continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                             //create a new attendance with an exhisting client -> localRegistry retrieving registered clients from existing file
                             break;
+
+                        default:
+                            throw new IllegalStateException("VALOR INCORRETO" + choice12 + "POR FAVOR TENTE NOVAMENTE");
                     }
                     break;
 
@@ -107,7 +116,8 @@ public String toString() {
                     int tableNumber = scanner.nextInt();
                     scanner.nextLine();
                     Table table = localRegion.getTableByNumber(tableNumber);
-                    continueAttendance(localRegion, localRegistry, localRegion.getAttendanceByTable(table), menu, scanner, pastBillings);
+                    attendance = localRegion.getAttendanceByTable(table);
+                    continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                     break;
 
                 case 3:
@@ -141,8 +151,8 @@ public String toString() {
             }
             int choice;
             do {
-                System.out.println(attendance.toString());
-                System.out.println("Selecione uma opção  válida: \n" +
+                System.out.println(attendance);
+                System.out.println("\nSelecione uma opção  válida: \n" +
                         "1 - CRIAR NOVO PEDIDO               2 - REMOVER PEDIDO DA NOTA              3 - ADICIONAR GARÇOM AO ATENDIMENTO\n                    " +
                         "4 - REMOVER GARÇOM DO ATENDIMENTO                   5 - ENCERRAR ATENDIMENTO\n              " +
                         "OU INSIRA 0 PARA VOLTAR");
@@ -154,8 +164,10 @@ public String toString() {
             }
             if (choice == 1) {
                 System.out.println(attendance.getBilling().toString());
-                attendance.billing.addOrder(Order.newOrderToBilling(localRegistry, menu, attendance, scanner));
-                attendance.billing.updateBillAttendantsFromOrders();
+                Order newOrder = Order.newOrderToBilling(localRegistry, menu, attendance, scanner);
+                attendance.getBilling().addOrderToBilling(newOrder);
+                attendance.getBilling().updateBillAttendantsFromBillOrders();
+
             }
             if (choice == 2) {
                 System.out.println(attendance.getBilling().toString());
@@ -182,8 +194,8 @@ public String toString() {
         this.endTime = localDateTime;
     }
 
-    private static Attendance newAttenNewClient(Region region, Client client, BillingHistory pastBillings, Scanner scanner) {
-        region.viewAvailableTables();
+    private static Attendance newAttenGivenClient(Region localRegion, Client client, BillingHistory pastBillings, Scanner scanner) {
+        localRegion.viewAvailableTables();
         System.out.println("Escolha a mesa disponivel desejada:  \n");
 
         try {
@@ -191,54 +203,54 @@ public String toString() {
             do {
                 tableNumber = scanner.nextInt();
                 scanner.nextLine();
-            } while (region.getTableByNumber(tableNumber) == null);
+            } while (localRegion.getTableByNumber(tableNumber) == null);
 
-            Table table = region.getTableByNumber(tableNumber);
+            Table table = localRegion.getTableByNumber(tableNumber);
             table.setClient(client);
             /*if (table == null || table.getClient() != null) {
                 throw new IllegalArgumentException("Mesa não disponível.");
             }*/
-            return new Attendance(table, client, pastBillings.getPastBillings());
+            return new Attendance(localRegion.getAttendances(), table, client, pastBillings.getPastBillings());
         } catch (InputMismatchException e) {
             throw new IllegalArgumentException("Entrada inválida. Por favor insira um numero para a mesa.");
         }
     }
 
     private static void addWaiterToAttendance(PersonDataRegistry localRegistry, Attendance attendance, Scanner scanner) {
-    try {
-        System.out.println("Por favor adicione um garçom ao atendimento");
-        System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
-        System.out.println("Insira o id do funcionario a adicionar ao atendimento OU INSIRA 0 PARA CANCELAR: ");
-        int id;
-        boolean verifier;
-        do {
-            id = scanner.nextInt();
-            scanner.nextLine();
-            verifier = false;
-            for (Employee employee : localRegistry.getEmployeesList()) {
-                if (employee.getIdAuth() == id) {
-                    verifier = true;
+        try {
+            System.out.println("Por favor adicione um garçom ao atendimento");
+            System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
+            System.out.println("Insira o id do funcionario a adicionar ao atendimento OU INSIRA 0 PARA CANCELAR: ");
+            int id;
+            boolean verifier;
+            do {
+                id = scanner.nextInt();
+                scanner.nextLine();
+                verifier = false;
+                for (Employee employee : localRegistry.getEmployeesList()) {
+                    if (employee.getIdAuth() == id) {
+                        verifier = true;
+                        break;
+                    }
+                }
+                if (!verifier) {
+                    System.out.println("ID inválido. Por favor tente novamente.");
                     break;
                 }
+            } while (!verifier);
+            if (id == 0) return;
+            Attendant attendant = (Attendant) localRegistry.findEmployeeById(id);
+            if (attendant != null) {
+                attendance.getTable().addAttendants(attendant);
+            } else {
+                System.out.println("No attendant found with the provided id.");
             }
-            if (!verifier) {
-                System.out.println("ID inválido. Por favor tente novamente.");
-                break;
-            }
-        } while (!verifier);
-        if (id == 0) return;
-        Attendant attendant = (Attendant) localRegistry.findEmployeeById(id);
-        if (attendant != null) {
-            attendance.getTable().addAttendants(attendant);
-        } else {
-            System.out.println("No attendant found with the provided id.");
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number.");
+        } catch (NullPointerException e) {
+            System.out.println("An error occurred. Please make sure all inputs are valid.");
         }
-    } catch (InputMismatchException e) {
-        System.out.println("Invalid input. Please enter a number.");
-    } catch (NullPointerException e) {
-        System.out.println("An error occurred. Please make sure all inputs are valid.");
     }
-}
 
     private static void removeWaiterrFromAttendance(PersonDataRegistry localRegistry, Attendance attendance, Scanner scanner) {
         System.out.println("POR FAVOR ESCOLHA O ATENDENTE A REMOVER");

@@ -34,23 +34,24 @@ public class Order {
     }
 
     public OrderItems getOrderItemByNumber(int index) {
-        if (index - 1 >= 0 && index - 1 < orderItems.size()) {
-            return orderItems.get(index - 1);
+        if (index - 1 >= 0 && index - 1 < this.orderItems.size()) {
+            return this.orderItems.get(index - 1);
         } else {
             return null;  // or throw an exception
         }
     }
 
     public List<OrderItems> getOrderItems() {
-        return orderItems;
+        return this.orderItems;
     }
 
-    public void addToOrder(OrderItems orderItems) {
-        this.orderItems.add(orderItems);
-        this.orderItems.sort(Comparator.comparing(o -> o.getItem().getName()));
-
+    public synchronized void addToOrder(OrderItems orderItems) {
+    if (orderItems == null || orderItems.getItem() == null) {
+        throw new IllegalArgumentException("OrderItems or its item cannot be null");
     }
-
+    this.orderItems.add(orderItems);
+    this.orderItems.sort(Comparator.comparing(o -> o.getItem().getName()));
+}
     public void deleteFromOrder(OrderItems orderItems) {
         this.orderItems.remove(orderItems);
     }
@@ -72,15 +73,15 @@ public class Order {
     }
 
     public double getValorTotalPedido() {
-        return orderValue;
+        return this.orderValue;
     }
 
-    public void setValorTotalPedido(double valorPedido) {
+    public void setValorTotalPedido() {
         this.orderValue = this.orderItems.stream().mapToDouble(OrderItems::getItemTotalValue).sum();
     }
 
     public LocalDateTime getTimeOrdered() {
-        return timeOrdered;
+        return this.timeOrdered;
     }
 
     public void setTimeOrdered(LocalDateTime timeOrdered) {
@@ -89,10 +90,10 @@ public class Order {
 
     public String toString() {
 
-        if (!orderItems.isEmpty()) {
+        if (!this.orderItems.isEmpty()) {
             int counter = 1;
             StringBuilder string = new StringBuilder("--Lista de itens do pedido:\n");
-            for (OrderItems orderItems : orderItems) {
+            for (OrderItems orderItems : this.orderItems) {
                 string.append("---Item n°" + counter + "\n");
                 string.append(orderItems.toString()).append(",\n ");
                 counter++;
@@ -111,22 +112,50 @@ public class Order {
         OrderItems newOrderItem;
         Order newOrder = new Order();
         try {
-            System.out.println("POR FAVOR SELECIONE UM ATENDENTE DA MESA PARA O PEDIDO");
-            System.out.println(attendance.getTable().getTableInfo());
-            idSelection = scanner.nextInt();
-            scanner.nextLine();
-            newOrder.setTable(attendance.getTable());
-            newOrder.setAttendant((Attendant) localRegistry.findEmployeeById(idSelection));
+            Attendant selectedAttendant = null;
             do {
-                System.out.println(menu);
-                System.out.println("POR FAVOR, SELECIONE O PROXIMO ITEM DO PEDIDO \nINSIRA O ID DO ITEM NO CARDAPIO");
+                System.out.println("POR FAVOR SELECIONE UM ATENDENTE DA MESA PARA O PEDIDO              OU INSIRA 0 PARA CANCELAR");
+                System.out.println(attendance.getTable().getTableInfo());
                 idSelection = scanner.nextInt();
                 scanner.nextLine();
-                System.out.println("POR FAVOR, INSIRA A QUANTIDADE DO  ITEM SELECIONADO, NO PEDIDO");
-                quantitySelection = scanner.nextInt();
-                scanner.nextLine();
-                newOrderItem = new OrderItems(Menu.findItemById(idSelection, menu), quantitySelection);
-                newOrder.addToOrder(newOrderItem);
+
+                if (idSelection == 0) {
+                    return null;
+                }
+
+                selectedAttendant = (Attendant) localRegistry.findEmployeeById(idSelection);
+                if (selectedAttendant == null) {
+                    System.out.println("ID DE ATENDENTE NÃO ENCONTRADO. POR FAVOR TENTE NOVAMENTE.");
+                }
+            } while (selectedAttendant == null);
+
+            if (selectedAttendant != null) {
+                newOrder.setTable(attendance.getTable());
+                newOrder.setAttendant(selectedAttendant);
+            }
+            do {
+                do {
+                    System.out.println(menu);
+                    System.out.println("POR FAVOR, SELECIONE O PROXIMO ITEM DO PEDIDO \nINSIRA O ID DO ITEM NO CARDAPIO                 OU 0 PARA CANCELAR");
+                    idSelection = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (idSelection == 0) {
+                        return null;
+                    }
+
+                    System.out.println("POR FAVOR, INSIRA A QUANTIDADE DO  ITEM SELECIONADO, NO PEDIDO");
+                    quantitySelection = scanner.nextInt();
+                    scanner.nextLine();
+
+                    newOrderItem = new OrderItems(Menu.findItemById(idSelection, menu), quantitySelection);
+                    if (newOrderItem.getItem() == null) {
+                        System.out.println("ID DE ITEM NÃO ENCONTRADO. POR FAVOR TENTE NOVAMENTE.");
+                    } else {
+                        newOrder.addToOrder(newOrderItem);
+                        newOrder.setValorTotalPedido();
+                    }
+                } while (newOrderItem.getItem() == null);
 
                 System.out.println("GOSTARIA DE ADICIONAR MAIS ITEMS AO PEDIDO?\n SELECIONE             1- SIM              2- NÃO");
                 verificatorChoice = scanner.nextInt();
@@ -135,7 +164,8 @@ public class Order {
                     case 1:
                         break;
                     case 2:
-                        return newOrder;
+                        verificator=false;
+                        break;
 
                     default:
                         throw new IllegalStateException("Unexpected value: " + verificatorChoice);
@@ -147,6 +177,6 @@ public class Order {
             System.out.println("Ocorreu um erro. Por favor verifique.");
             e.getMessage();
         }
-    return null;
+        return newOrder;
     }
 }

@@ -45,6 +45,7 @@ public class Client extends Person {
             do {
                 System.out.println("Insira abaixo o cpf do cliente:  ");
                 cpf = scanner.nextLine();
+                cpf = cpf.replaceAll("\\D+", "");
                 cpfCheck = false;
                 for (Client clientCheck : clients) {
                     if (clientCheck.getCpf() == cpf) {

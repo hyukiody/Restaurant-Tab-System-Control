@@ -15,7 +15,7 @@ public class Billing {
     private List<Attendant> attendantList;
     private double totalBillValue;
     private LocalDateTime paymentTime;
-    private String PaymentStatus;
+    private String paymentStatus;
     private int billId;
 
     public Billing(Client client, List<Billing> pastBillings) {
@@ -25,6 +25,7 @@ public class Billing {
         this.totalBillValue = 0;
         this.paymentTime = null;
         this.billId = generateBillId(pastBillings);
+        this.paymentStatus = "Quitado";
     }
 
     private int generateBillId(List<Billing> pastBillings) {
@@ -50,26 +51,26 @@ public class Billing {
     }
 
 
-    public void addOrder(Order order) {
+    public void addOrderToBilling(Order order) {
         if (order == null) {
             throw new IllegalArgumentException("Order cannot be null");
         }
-        if (this.getPaymentStatus() == null) {
-            throw new IllegalStateException("Payment status is not set");
+
+        if (this.billOrders.add(order)) {
+            setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum());
+            this.getPaymentStatus().equals("Quitado");
+            setPaymentStatus("Pendente");
         }
-        if (this.billOrders == null) {
-            this.billOrders = new ArrayList<>();
-        }
-        if (this.getPaymentStatus().equals("Paid")) {
-            setPaymentStatus("Pending");
-        }
-        this.billOrders.add(order);
-        setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum());
+
     }
 
     public void removeOrderFromBilling(Scanner scanner) {
         if (this.billOrders == null) {
             throw new IllegalStateException("Bill orders is not set");
+        }
+        if (this.billOrders.isEmpty()) {
+            System.out.println("Não é possível remover. Lista de pedidos da nota está vazia.");
+            return;
         }
         System.out.println("POR FAVOR INSIRA O NUMERO DO PEDIDO A REMOVER");
         if (!scanner.hasNextInt()) {
@@ -130,15 +131,13 @@ public class Billing {
         this.attendantList = attendants;
     }
 
-    public void updateBillAttendantsFromOrders() {
-        List<Attendant> newUpdate = new ArrayList<>();
+    public void updateBillAttendantsFromBillOrders() {
+        List<Attendant> newUpdate = new ArrayList<Attendant>();
         if (!this.getBillOrders().isEmpty()) {
             for (Order order : this.getBillOrders()) {
                 newUpdate.add(order.getAttendant());
             }
             this.setAttendantList(newUpdate);
-        } else if (this.getBillOrders().isEmpty()) {
-            this.setAttendantList(new ArrayList<>());
         }
     }
 
@@ -169,11 +168,11 @@ public class Billing {
     }
 
     public String getPaymentStatus() {
-        return PaymentStatus;
+        return paymentStatus;
     }
 
-    public void setPaymentStatus(String PaymentStatus) {
-        this.PaymentStatus = PaymentStatus;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public int getBillId() {
@@ -198,6 +197,7 @@ public class Billing {
                 body.append(order.toString());
                 counter++;
             }
+            body.append("\nStatus de pagamento:").append(getPaymentStatus());
             return body.toString();
         } else {
             return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + "\n Esta nota não possui pedidos. \n";

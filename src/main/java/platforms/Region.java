@@ -57,8 +57,8 @@ public class Region {
     }
 }
 
-    public Attendance getAttendances() {
-        return (Attendance) this.attendances;
+    public List<Attendance> getAttendances() {
+        return  this.attendances;
     }
 
     public void addAttendance(Attendance attendance) {

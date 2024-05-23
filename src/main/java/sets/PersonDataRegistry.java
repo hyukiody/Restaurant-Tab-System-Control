@@ -78,9 +78,9 @@ public class PersonDataRegistry {
         }
     }
 
-    public String viewClientsInRegistry(List<Client> clients) {
+    public String viewClientsInRegistry() {
         StringBuilder body = new StringBuilder("Clientes cadastrados no registro local: \n");
-        for (Client client : clients) {
+        for (Client client : this.clients) {
             body.append(client.toString());
             body.append("\n");
         }
