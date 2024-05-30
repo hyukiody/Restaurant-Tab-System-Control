@@ -9,6 +9,7 @@ import sets.PersonDataRegistry;
 import java.util.*;
 
 import static platforms.Attendance.menuAttendances;
+import static services.DeliveryServices.deliveryMenu;
 
 public class Main {
 
@@ -69,7 +70,8 @@ public class Main {
     private static void viewPastDailyReports() {
     }
 
-    private static void closeDayAttendances(Attendance attendances) {
+    private static void
+    closeDayAttendances(Attendance attendances) {
     }
 
     private static void viewEmployeesInLocalRegistry(PersonDataRegistry localRegistry) {
@@ -82,7 +84,7 @@ public class Main {
             int menuChoice;
             do {
                 do {
-                    System.out.println("--Menu Principal--\n1 - Atendimentos            2 - Cardapio            3 - Entregas            4 - Cadastros e Registros\n            5 - Sair");
+                    System.out.println("--Menu Principal--\n1 - Atendimentos            2 - Cardapio            3 - RESERVAS            4 - Cadastros e Registros\n            5 - Sair");
 
                     if (scanner.hasNextInt()) {
                         menuChoice = scanner.nextInt();
@@ -108,7 +110,7 @@ public class Main {
                         break;
                     case 3:
                         System.out.println("Starting menuDeliveries...");
-                        menuDeliveries(scanner);
+                        deliveryMenu(scanner);
                         System.out.println("Finished menuDeliveries");
                         break;
                     case 4:

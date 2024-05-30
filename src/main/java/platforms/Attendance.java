@@ -68,7 +68,7 @@ public class Attendance {
     public static void menuAttendances(Region localRegion, PersonDataRegistry localRegistry, Menu menu, BillingHistory pastBillings, Scanner scanner) {
         int choice = 0;
         do {
-            System.out.println("\n\n1 - Iniciar novo atendimento        2 - Continuar atendimento       3 - Exibir atendimentos em andamento\n\n4 - Encerrar atendimento pagamento      5 - Exibir atendimentos encerrados hoje         6- Voltar");
+            System.out.println("\n\n1 - Iniciar novo atendimento        2 - Continuar atendimento       3 - Exibir atendimentos em andamento\n\n4 - EXIBIR VENDAS DO DIA      5 -          6- Voltar");
             try {
                 choice = scanner.nextInt();
                 scanner.nextLine();
@@ -282,11 +282,12 @@ public class Attendance {
                         attendance.setEndTime(LocalDateTime.now());
 
                         pastBillings.addEndedBilling(attendance.getBilling());
-                        attendance.table.cleanTable(attendance.getTable());
+                        attendance.getTable().cleanTable(attendance.getTable());
                         localRegion.removeAttendance(attendance);
                         attendance = null;
 
                     }
+                    else{}
                 } else {
                     System.out.println("Attendance or billing is null.");
                 }
