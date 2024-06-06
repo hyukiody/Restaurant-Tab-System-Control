@@ -3,7 +3,6 @@ package services;
 
 import entities.Item;
 
-import java.io.*;
 import java.util.*;
 
 import static entities.Item.*;
@@ -135,11 +134,11 @@ public class Menu {
 
     }
 
-    public static Item findItemById(int id, Menu menu) {
-    if (menu == null) {
+    public Item getItemById(int id) {
+    if (getItemMenu() == null) {
         throw new IllegalArgumentException("Menu cannot be null");
     }
-    for (Item item : menu.getItemMenu()) {
+    for (Item item : getItemMenu()) {
         if (item.getIdItem() == id) {
             return item;
         }

@@ -219,7 +219,7 @@ public class Attendance {
     private static void addWaiterToAttendance(PersonDataRegistry localRegistry, Attendance attendance, Scanner scanner) {
         try {
             System.out.println("Por favor adicione um garçom ao atendimento");
-            System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
+            System.out.println(localRegistry.viewEmployeesInRegistry());
             System.out.println("Insira o id do funcionario a adicionar ao atendimento OU INSIRA 0 PARA CANCELAR: ");
             int id;
             boolean verifier;
@@ -239,7 +239,7 @@ public class Attendance {
                 }
             } while (!verifier);
             if (id == 0) return;
-            Attendant attendant = (Attendant) localRegistry.findEmployeeById(id);
+            Attendant attendant = (Attendant) localRegistry.getEmployeeById(id);
             if (attendant != null) {
                 attendance.getTable().addAttendants(attendant);
             } else {
@@ -254,7 +254,7 @@ public class Attendance {
 
     private static void removeWaiterrFromAttendance(PersonDataRegistry localRegistry, Attendance attendance, Scanner scanner) {
         System.out.println("POR FAVOR ESCOLHA O ATENDENTE A REMOVER");
-        System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
+        System.out.println(localRegistry.viewEmployeesInRegistry());
         System.out.println("INSIRA O ID DO FUNCIONARIO A REMOVER DO ATENDIMENTO OU INSIRA 0 PARA CANCELAR");
         int id = scanner.nextInt();
         scanner.nextLine();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class PersonDataRegistry {
     private List<Client> clients;
@@ -18,7 +19,7 @@ public class PersonDataRegistry {
     }
 
 
-    public Employee findEmployeeById(int id) {
+    public Employee getEmployeeById(int id) {
         for (Employee employee : employees) {
             if (employee.getIdAuth()==id) {
                 return employee;
@@ -41,7 +42,7 @@ public class PersonDataRegistry {
 
     public void removeEmployeeById(int id) {
         for (Employee employee : employees) {
-            if (employee.equals(findEmployeeById(id))) {
+            if (employee.equals(getEmployeeById(id))) {
                 employees.remove(employee);
             }
         }
@@ -86,12 +87,24 @@ public class PersonDataRegistry {
         }
         return body.toString();
     }
+public List<Clerk> getClerks() {
+    return getEmployeesList().stream()
+        .filter(Clerk.class::isInstance)
+        .map(Clerk.class::cast)
+        .collect(Collectors.toList());
+}
 
-    public String viewEmployeesInRegistry(List<Employee> employees) {
+public List<Deliverer> getDeliverers() {
+    return getEmployeesList().stream()
+        .filter(Deliverer.class::isInstance)
+        .map(Deliverer.class::cast)
+        .collect(Collectors.toList());
+}
+    public String viewEmployeesInRegistry() {
         StringBuilder body = new StringBuilder("Funcionarios cadastrados no registro local:");
-        if (!employees.isEmpty()) {
+        if (!getEmployeesList().isEmpty()) {
             int num = 1;
-            for (Employee employee : employees) {
+            for (Employee employee : getEmployeesList()) {
                 body.append("\nCadastro n° - ").append(num).append(employee.toString());
                 num++;
             }

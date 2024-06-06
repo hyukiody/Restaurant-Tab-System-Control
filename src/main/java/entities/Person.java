@@ -25,7 +25,7 @@ public abstract class Person {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -33,7 +33,7 @@ public abstract class Person {
     }
 
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
 
     public void setPhone(String phone) {
@@ -41,7 +41,7 @@ public abstract class Person {
     }
 
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
 
     public void setCpf(String cpf) {
@@ -49,7 +49,7 @@ public abstract class Person {
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public void setAge(int age) {
@@ -57,7 +57,7 @@ public abstract class Person {
     }
 
     public String getGender() {
-        return gender;
+        return this.gender;
     }
 
     public void setGender(String gender) {
@@ -65,7 +65,7 @@ public abstract class Person {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -73,7 +73,7 @@ public abstract class Person {
     }
 
     public Address getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(Address address) {

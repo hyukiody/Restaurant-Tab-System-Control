@@ -57,7 +57,7 @@ public class Address {
         return "Address: " + streetAndNumber + ", " + block + ", " + city + ", " + cep + "\n";
     }
 
-    public Address newAddress(Scanner scanner) {
+    public static Address newAddress(Scanner scanner) {
         try {
             System.out.println("Digite a rua do novo endereço:");
             String newStreetAndNumber = scanner.nextLine();

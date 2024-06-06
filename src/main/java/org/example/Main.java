@@ -2,6 +2,7 @@ package org.example;
 
 import platforms.Attendance;
 import platforms.Region;
+import services.DeliveryServices;
 import services.Menu;
 import sets.BillingHistory;
 import sets.PersonDataRegistry;
@@ -75,10 +76,10 @@ public class Main {
     }
 
     private static void viewEmployeesInLocalRegistry(PersonDataRegistry localRegistry) {
-        System.out.println(localRegistry.viewEmployeesInRegistry(localRegistry.getEmployeesList()));
+        System.out.println(localRegistry.viewEmployeesInRegistry());
     }
 
-    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, BillingHistory pastBillings, Scanner scanner) {
+    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, BillingHistory pastBillings, DeliveryServices deliveries,Scanner scanner) {
 
         try {
             int menuChoice;
@@ -110,7 +111,7 @@ public class Main {
                         break;
                     case 3:
                         System.out.println("Starting menuDeliveries...");
-                        deliveryMenu(scanner);
+                        deliveryMenu(localRegistry,deliveries.getReservationOrders(),pastBillings, localMenu,scanner);
                         System.out.println("Finished menuDeliveries");
                         break;
                     case 4:
@@ -143,13 +144,16 @@ public class Main {
 
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
+
         Region localRegion = new Region();
         PersonDataRegistry localRegistry = new PersonDataRegistry();
         Menu localMenu = new Menu();
         BillingHistory billingHistory = new BillingHistory();
-        Scanner sc = new Scanner(System.in);
+        DeliveryServices deliveries = new DeliveryServices();
+
+        Scanner scanner = new Scanner(System.in);
         try {
-            menuPrincipal(localRegion, localRegistry, localMenu, billingHistory ,sc);
+            menuPrincipal(localRegion, localRegistry, localMenu, billingHistory,deliveries,scanner);
         } catch (Exception e) {
             System.out.println("Ocorreu um erro 11" + e.getMessage());
             e.printStackTrace();

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Billing {
-
+    private Attendant reservationAttendant;
+    private ReservationOrder reservationOrder;
     private List<Order> billOrders;
     private Client client;
     private List<Attendant> attendantList;
@@ -17,6 +18,19 @@ public class Billing {
     private LocalDateTime paymentTime;
     private String paymentStatus;
     private int billId;
+    private LocalDateTime timeGenerated;
+
+
+    public Billing(List<Billing> pastBillings, ReservationOrder reservationOrder) {
+        this.reservationOrder = reservationOrder;
+        this.reservationAttendant = reservationOrder.getAttendant();
+        this.client = reservationOrder.getClient();
+        this.totalBillValue = reservationOrder.getTotalOrderValue();
+        this.paymentTime = reservationOrder.getTimeDelivered();
+        this.billId = generateBillId(pastBillings);
+        this.paymentStatus = "Pending";
+        getReservationOrder().setTimeDelivered(LocalDateTime.now());
+    }   //billing constructor for reserved Order, to be created and saved right after confirmation of delivery
 
     public Billing(Client client, List<Billing> pastBillings) {
         this.billOrders = new ArrayList<Order>();
@@ -26,7 +40,8 @@ public class Billing {
         this.paymentTime = null;
         this.billId = generateBillId(pastBillings);
         this.paymentStatus = "Quitado";
-    }
+        this.timeGenerated = LocalDateTime.now();
+    }   //attendance bill constructor
 
     private int generateBillId(List<Billing> pastBillings) {
         boolean exists;
@@ -44,6 +59,22 @@ public class Billing {
         } while (exists || id == 0);
         return id;
 
+    }
+
+    public ReservationOrder getReservationOrder() {
+        return this.reservationOrder;
+    }
+
+    public void setReservationOrder(ReservationOrder reservationOrder) {
+        this.reservationOrder = reservationOrder;
+    }
+
+    public Attendant getReservationAttendant() {
+        return this.reservationAttendant;
+    }
+
+    public void setReservationAttendant(Attendant reservationAttendant) {
+        this.reservationAttendant = reservationAttendant;
     }
 
     public List<Order> getBillOrders() {
@@ -83,18 +114,22 @@ public class Billing {
             if (this.billOrders.isEmpty()) {
                 setPaymentStatus("Paid");
             }
-            recalculateTotalBillValue();
+            refreshTotalBillValue();
         } else {
             throw new IndexOutOfBoundsException("Valor fora do alcance.");
         }
     }
 
 
-    private void recalculateTotalBillValue() {
-        if (this.billOrders == null) {
+    private void refreshTotalBillValue() {
+        if (getBillOrders() == null && getReservationOrder() == null) {
             throw new IllegalStateException("Bill orders is not set");
+        } else if (getBillOrders() != null && getReservationOrder() == null) {
+            setTotalBillValue(getBillOrders().stream().mapToDouble(Order::getValorTotalPedido).sum());
+        } else if (getBillOrders() == null && getReservationOrder() != null) {
+            setTotalBillValue(getReservationOrder().getTotalOrderValue());
         }
-        setTotalBillValue(this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum());
+
     }
 
     public Client getClient() {
@@ -106,11 +141,11 @@ public class Billing {
     }
 
     public String AttendantsListToString() {
-        if (this.attendantList == null) {
+        if (getAttendantList() == null) {
             throw new IllegalStateException("Attendant list is not set");
         }
         StringBuilder body = new StringBuilder("Lista de atendentes: \n");
-        for (Attendant attendant : this.attendantList) {
+        for (Attendant attendant : getAttendantList()) {
             if (attendant == null || attendant.getName() == null) {
                 throw new IllegalArgumentException("Attendant or attendant name cannot be null");
             }
@@ -123,12 +158,12 @@ public class Billing {
         return attendantList;
     }
 
-    public void addAttendant(Attendant attendant) {
-        this.attendantList.add(attendant);
-    }
-
     public void setAttendantList(List<Attendant> attendants) {
         this.attendantList = attendants;
+    }
+
+    public void addAttendant(Attendant attendant) {
+        this.attendantList.add(attendant);
     }
 
     public void updateBillAttendantsFromBillOrders() {
@@ -149,6 +184,10 @@ public class Billing {
         this.totalBillValue = totalBillValue;
     }
 
+    public LocalDateTime getPaymentTime() {
+        return paymentTime;
+    }
+
     /*public double getTotalBillValue() {
         return totalBillValue = this.billOrders.stream().mapToDouble(Order::getValorTotalPedido).sum();
     }
@@ -156,10 +195,6 @@ public class Billing {
      */
     public void setPaymentTime(LocalDateTime localDateTIme) {
         this.paymentTime = localDateTIme;
-    }
-
-    public LocalDateTime getPaymentTime() {
-        return paymentTime;
     }
 
     public void makePayment() {
@@ -179,20 +214,31 @@ public class Billing {
         return billId;
     }
 
+    public LocalDateTime getTimeGenerated() {
+        return this.timeGenerated;
+    }
+
     @Override
     public String toString() {
-
-        if (!billOrders.isEmpty()) {
+        if (getBillOrders().isEmpty() && getReservationOrder() != null) {
+            StringBuilder body = new StringBuilder().append("Nota Fiscal de Reserva: ID: ").append(getBillId())
+                    .append("\nClient: ").append(getClient().getName())
+                    .append("\nAttendant: ").append(getReservationAttendant())
+                    .append("\nValor Total: ").append(getTotalBillValue())
+                    .append("\nHora Gerada: ").append(getTimeGenerated())
+                    .append(getReservationOrder().toString())
+                    .append("Status do pagamento: ").append(getPaymentStatus());
+            return body.toString();
+        } else if (!getBillOrders().isEmpty() && getReservationOrder() == null) {
             int counter = 1;
-            StringBuilder body =
-                    new StringBuilder(new StringBuilder()
-                            .append("Nota Fiscal: ID: ").append(getBillId())
-                            .append(", \nClient: ").append(client.getName())
-                            .append(", \nAttendants: ").append(AttendantsListToString())
-                            .append(", \nValor Total: ").append(getTotalBillValue())
-                            .append(", \nHora Gerada: ").append(getPaymentTime())
-                            .append("\n Pedidos da Nota: \n").toString());
-            for (Order order : billOrders) {
+            StringBuilder body = new StringBuilder()
+                    .append("Nota Fiscal: ID: ").append(getBillId())
+                    .append(", \nClient: ").append(getClient().getName())
+                    .append(", \nAttendants: ").append(AttendantsListToString())
+                    .append(", \nValor Total: ").append(getTotalBillValue())
+                    .append(", \nHora Gerada: ").append(getPaymentTime())
+                    .append("\n Pedidos da Nota: \n");
+            for (Order order : getBillOrders()) {
                 body.append("-Pedido N°").append(counter + "\n");
                 body.append(order.toString());
                 counter++;
@@ -200,7 +246,7 @@ public class Billing {
             body.append("\nStatus de pagamento:").append(getPaymentStatus());
             return body.toString();
         } else {
-            return "Nota Fiscal: ID: " + getBillId() + ", Client: " + client.getName() + "\n Esta nota não possui pedidos. \n";
+            return "Nota Fiscal: ID: " + getBillId() + ", Client: " + getClient().getName() + "\n Esta nota não possui pedidos. \n";
         }
     }
 }

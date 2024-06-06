@@ -11,13 +11,13 @@ public class Deliverer extends entities.Employee implements Attendant {
 
     @Override
     public String getName(){
-        return this.getName();
+        return super.getName();
     }
 
 
     @Override
     public Attendant getAttendant() {
-        return null;
+        return this;
     }
 
     public int getId() {

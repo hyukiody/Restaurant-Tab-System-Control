@@ -123,7 +123,7 @@ public class Order {
                     return null;
                 }
 
-                selectedAttendant = (Attendant) localRegistry.findEmployeeById(idSelection);
+                selectedAttendant = (Attendant) localRegistry.getEmployeeById(idSelection);
                 if (selectedAttendant == null) {
                     System.out.println("ID DE ATENDENTE NÃO ENCONTRADO. POR FAVOR TENTE NOVAMENTE.");
                 }
@@ -148,7 +148,7 @@ public class Order {
                     quantitySelection = scanner.nextInt();
                     scanner.nextLine();
 
-                    newOrderItem = new OrderItems(Menu.findItemById(idSelection, menu), quantitySelection);
+                    newOrderItem = new OrderItems(menu.getItemById(idSelection), quantitySelection);
                     if (newOrderItem.getItem() == null) {
                         System.out.println("ID DE ITEM NÃO ENCONTRADO. POR FAVOR TENTE NOVAMENTE.");
                     } else {

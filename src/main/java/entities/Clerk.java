@@ -10,7 +10,7 @@ public class Clerk extends entities.Employee implements Attendant {
     }
     @Override
     public String getName(){
-        return this.getName();
+        return super.getName();
     }
     @Override
     public Attendant getAttendant() {
