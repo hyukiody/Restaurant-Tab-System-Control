@@ -17,7 +17,7 @@ public class Table {
     }
 
     public int getNumero() {
-        return numero;
+        return this.numero;
     }
 
     public void setNumero(int numero) {
@@ -25,14 +25,10 @@ public class Table {
     }
 
     public Client getClient() {
-        return client;
+        return this.client;
     }
 
     public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void addClient(Client client) {
         this.client = client;
     }
 
@@ -41,7 +37,7 @@ public class Table {
     }
 
     public List<sets.Attendant> getAttendants() {
-        return attendants;
+        return this.attendants;
     }
 
     public void setAttendants(List<sets.Attendant> attendants) {
@@ -49,36 +45,36 @@ public class Table {
     }
 
     public void addAttendants(sets.Attendant attendant) {
-        if (!this.attendants.contains(attendant)) {
-            this.attendants.add(attendant);
+        if (!getAttendants().contains(attendant)) {
+            getAttendants().add(attendant);
         } else {
             System.out.println("Garçom já adicionado");
         }
     }
 
     public void removeAttendants(sets.Attendant attendant) {
-        if (this.attendants.contains(attendant)) {
-            this.attendants.remove(attendant);
+        if (getAttendants().contains(attendant)) {
+            getAttendants().remove(attendant);
         } else {
             System.out.println("Garçom não encontrado");
         }
     }
 
     public void viewTableInfo() {
-        System.out.println("Informações da Mesa n°:  " + this.getNumero() + " \nCliente da mesa: " + this.client.getName() + "\nGarçons da mesa: " + waitersListToString() + "\n");
+        System.out.println("Informações da Mesa n°:  " + this.getNumero() + " \nCliente da mesa: " + getClient().getName() + "\nGarçons da mesa: " + waitersListToString() + "\n");
         ;
     }
 
     public String waitersListToString() {
         String waiters = "";
-        for (Attendant attendant : this.attendants) {
+        for (Attendant attendant : getAttendants()) {
             waiters += attendant.getName() + ", " + "Id: " + attendant.getId();
         }
         return waiters;
     }
 
     public String getTableInfo() {
-        return "Informações da Mesa n°:  " + this.getNumero() + " \nCliente da mesa: " + this.client.getName() + "\nGarçons da mesa: " + waitersListToString() + "\n";
+        return "Informações da Mesa n°:  " + this.getNumero() + " \nCliente da mesa: " + getClient().getName() + "\nGarçons da mesa: " + waitersListToString() + "\n";
     }
     public void cleanTable(Table table){
         table.setClient(null);

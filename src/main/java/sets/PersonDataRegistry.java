@@ -20,7 +20,7 @@ public class PersonDataRegistry {
 
 
     public Employee getEmployeeById(int id) {
-        for (Employee employee : employees) {
+        for (Employee employee :getEmployeesList()) {
             if (employee.getIdAuth()==id) {
                 return employee;
             }
@@ -33,23 +33,23 @@ public class PersonDataRegistry {
     }
 
     public void addEmployeeToList(Employee employee) {
-        this.employees.add(employee);
+        getEmployeesList().add(employee);
     }
 
     public void removeEmployeeFromList(Employee employee) {
-        this.employees.remove(employee);
+        getEmployeesList().remove(employee);
     }
 
     public void removeEmployeeById(int id) {
-        for (Employee employee : employees) {
+        for (Employee employee : getEmployeesList()) {
             if (employee.equals(getEmployeeById(id))) {
-                employees.remove(employee);
+                getEmployeesList().remove(employee);
             }
         }
     }
 
     public Client findClientByCpf(String cpf) {
-        for (Client client : this.clients) {
+        for (Client client : getClientsList()) {
             if (client.getCpf().equals(cpf)) {
                 return client;
             } else {
@@ -63,25 +63,25 @@ public class PersonDataRegistry {
         return this.clients;
     }
 
-    public void addClientToList(Client client) {
-        this.clients.add(client);
+    protected void addClientToList(Client client) {
+        getClientsList().add(client);
     }
 
-    public void removeClientFromList(Client client) {
-        this.clients.remove(client);
+    private void removeClientFromList(Client client) {
+        getClientsList().remove(client);
     }
 
-    public void removeClientByCpf(String cpf) {
-        for (Client client : clients) {
+    private void removeClientByCpf(String cpf) {
+        for (Client client : getClientsList()) {
             if (client.equals(findClientByCpf(cpf))) {
-                clients.remove(client);
+                getClientsList().remove(client);
             }
         }
     }
 
     public String viewClientsInRegistry() {
         StringBuilder body = new StringBuilder("Clientes cadastrados no registro local: \n");
-        for (Client client : this.clients) {
+        for (Client client : getClientsList()) {
             body.append(client.toString());
             body.append("\n");
         }
@@ -114,7 +114,7 @@ public List<Deliverer> getDeliverers() {
         return body.toString();
     }
 
-    public static void registerNewEmployee(List<Employee> employees, Scanner scanner) {
+    public static void registerNewEmployee(PersonDataRegistry localRegistry, Scanner scanner) {
         try {
 
 
@@ -138,20 +138,44 @@ public List<Deliverer> getDeliverers() {
             String sexo = scanner.nextLine();
             System.out.println("Insira o email do funcionario:");
             String email = scanner.nextLine();
-            System.out.println("Insira o CPF do funcionario");
-            String cpf = scanner.nextLine();
+          boolean verifier;
+String cpf;
+do {
+    verifier = false;
+    System.out.println("Insira o CPF do funcionario");
+    cpf = scanner.nextLine();
+    if (!cpf.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+        System.out.println("CPF incorreto; por favor tente novamente");
+        verifier = true;
+    } else {
+        for(Employee employee : localRegistry.getEmployeesList()){
+            if(employee.getCpf().equals(cpf)){
+                System.out.println("CPF já encontrado no registro local; por favor tente novamente.");
+                verifier = true;
+                break;
+            }
+        }
+    }
+} while (verifier);
             Address address = new Address().newAddress(scanner);
             System.out.println(address.toString());
 
             // Create employee object based on choice
 
-            Employee employee = switch (choice2) {
-                case 1 -> new Waiter(nome, fone, idade, sexo, email, cpf, address, employees);
-
-                case 2 -> new Clerk(nome, fone, idade, sexo, email, cpf, address, employees);
-                case 3 -> new Deliverer(nome, fone, idade, sexo, email, cpf, address, employees);
-                default -> throw new IllegalStateException("Unexpected value: " + choice2);
-            };
+            Employee employee;
+            switch (choice2) {
+                case 1:
+                    employee = new Waiter(nome, fone, idade, sexo, email, cpf, address, localRegistry);
+                    break;
+                case 2:
+                    employee = new Clerk(nome, fone, idade, sexo, email, cpf, address, localRegistry);
+                    break;
+                case 3:
+                    employee = new Deliverer(nome, fone, idade, sexo, email, cpf, address, localRegistry);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + choice2);
+            }
 
             // Handle successful registration (if employee is created)
 

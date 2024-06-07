@@ -1,20 +1,21 @@
 package entities;
 
 import sets.Attendant;
+import sets.PersonDataRegistry;
 
 import java.util.List;
 
 public abstract class Employee extends Person {
     private int idAuth;
 
-        public Employee(String name, String phone, int age, String gender, String email, String cpf, Address address, List<Employee> employees) {
+        public Employee(String name, String phone, int age, String gender, String email, String cpf, Address address, PersonDataRegistry localRegistry) {
         super(name, phone, age, gender, email, cpf, address);
-        this.idAuth = generateIdAuth(employees);
-        employees.add(this);
+        this.idAuth = generateIdAuth(localRegistry.getEmployeesList());
+        localRegistry.getEmployeesList().add(this);
     }
 
     public int getIdAuth() {
-        return idAuth;
+        return this.idAuth;
     }
 
     public void setIdAuth(int idAuth) {

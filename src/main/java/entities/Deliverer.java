@@ -1,12 +1,13 @@
 package entities;
 
 import sets.Attendant;
+import sets.PersonDataRegistry;
 
 import java.util.List;
 
 public class Deliverer extends entities.Employee implements Attendant {
-    public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Address address, List<Employee> employees) {
-        super(name, phone, age, gender, email, cpf, address, employees);
+    public Deliverer(String name, String phone, int age, String gender, String email, String cpf, Address address, PersonDataRegistry localRegistry) {
+        super(name, phone, age, gender, email, cpf, address, localRegistry);
     }
 
     @Override

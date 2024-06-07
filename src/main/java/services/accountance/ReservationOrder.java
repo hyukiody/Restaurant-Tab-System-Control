@@ -79,6 +79,7 @@ public class ReservationOrder {
         this.timeDelivered = timeDelivered;
     }
 
+    @Override
     public String toString() {
 
         if (!getOrderItems().isEmpty()) {

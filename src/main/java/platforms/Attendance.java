@@ -86,7 +86,7 @@ public class Attendance {
                     Client client;
                     switch (choice12) {
                         case 1:
-                            client = new Client().registerNewClient(localRegistry.getClientsList(), scanner);
+                            client = new Client().registerNewClient(localRegistry, scanner);
                             attendance = newAttenGivenClient(localRegion, client, pastBillings, scanner);
                             continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                             break;
@@ -98,8 +98,12 @@ public class Attendance {
                             System.out.println(localRegistry.viewClientsInRegistry());
                             System.out.println("INSIRA O CPF DO CLIENTE JÁ CADASTRADO");
                             String cpfInput = scanner.nextLine();
-                            cpfInput = cpfInput.replaceAll("\\D+", "");
-                            client = localRegistry.findClientByCpf(cpfInput);
+                            if (!cpfInput.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+                                System.out.println("CPF incorreto; por favor tente novamente");
+                                break;
+                            } else {
+                                client = localRegistry.findClientByCpf(cpfInput);
+                            }
                             attendance = newAttenGivenClient(localRegion, client, pastBillings, scanner);
                             continueAttendance(localRegion, localRegistry, attendance, menu, scanner, pastBillings);
                             //create a new attendance with an exhisting client -> localRegistry retrieving registered clients from existing file
@@ -145,7 +149,7 @@ public class Attendance {
             if (attendance.getTable().getAttendants().isEmpty()) {
                 if (localRegistry.getEmployeesList().isEmpty()) {
                     System.out.println("Não há funcionarios registrados; por favor cadastre um novo funcionario agora:");
-
+                    PersonDataRegistry.registerNewEmployee(localRegistry, scanner);
                 }
                 addWaiterToAttendance(localRegistry, attendance, scanner);
             }
@@ -226,6 +230,7 @@ public class Attendance {
             do {
                 id = scanner.nextInt();
                 scanner.nextLine();
+                if (id == 0) return;
                 verifier = false;
                 for (Employee employee : localRegistry.getEmployeesList()) {
                     if (employee.getIdAuth() == id) {
@@ -238,7 +243,7 @@ public class Attendance {
                     break;
                 }
             } while (!verifier);
-            if (id == 0) return;
+
             Attendant attendant = (Attendant) localRegistry.getEmployeeById(id);
             if (attendant != null) {
                 attendance.getTable().addAttendants(attendant);

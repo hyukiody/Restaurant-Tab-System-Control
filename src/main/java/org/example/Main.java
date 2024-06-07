@@ -1,5 +1,6 @@
 package org.example;
 
+import entities.Client;
 import platforms.Attendance;
 import platforms.Region;
 import services.DeliveryServices;
@@ -20,45 +21,42 @@ public class Main {
             int admChoice;
 
             do {
-                do {
 
-                    System.out.println("\n\n            1 - Cadastrar Funcionarios          2 - Exibir funcionarios cadastrados              3 - Relatorios anteriores               4 - Realizar fechamento diario \n\n 5 - Voltar");
-                    if (scanner.hasNextInt()) {
-                        admChoice = scanner.nextInt();
-                    } else {
+                System.out.println("\n\n            1 - Cadastrar Funcionarios          2 - Cadastrar Clientes              3 -Exibir funcionarios cadastrados                4 - Relatorios anteriores \n              5-Realizar fechamento diario                        6- Exibir clientes cadastrados    \n 7 - Voltar");
 
-                        scanner.nextLine(); // Consume any invalid input
-                        System.out.println("Entrada invalida. Digite um número (1, 2,  3, 4 ou 5): ");
-                        admChoice = scanner.nextInt();
-                        continue;
-                    }
-                    scanner.nextLine();
+                admChoice = scanner.nextInt();
+                scanner.nextLine();
 
-                } while (admChoice < 1 || admChoice > 5); // validate choice range
 
                 switch (admChoice) {
                     case 1:
-                        localRegistry.registerNewEmployee(localRegistry.getEmployeesList(), scanner);
+                        localRegistry.registerNewEmployee(localRegistry, scanner);
                         viewEmployeesInLocalRegistry(localRegistry);
 
                         break;
                     case 2:
-                        viewEmployeesInLocalRegistry(localRegistry);
+                        Client client = new Client().registerNewClient(localRegistry, scanner);
                         break;
                     case 3:
+                        viewEmployeesInLocalRegistry(localRegistry);
+                        break;
+                    case 4:
                         viewPastDailyReports();
                         //read and display history of attendances saved at pc files
                         break;
-                    case 4:
+                    case 5:
                         // closeDayAttendances(localRegion.getAttendances()){};//PENDING
                         // generating daily reports and saving to local file for further loading
                         break;
-                    case 5:
+                    case 6:
+                        System.out.println(localRegistry.viewClientsInRegistry());
+                        break;
+                    case 7:
                         break;
                     default:
                         System.out.println("Escolha invalida. Por favor insira opção válida");
                 }
-            } while (admChoice != 5);
+            } while (admChoice != 7);
         } catch (InputMismatchException e) {
             System.out.println("Entrada invalida. Por favor tente novamente");
             e.printStackTrace();
@@ -68,18 +66,22 @@ public class Main {
         }
     }
 
+    //to be implemented  method to show past billings; basically a sequence of system.out.println filtered by date;
     private static void viewPastDailyReports() {
     }
 
-    private static void
-    closeDayAttendances(Attendance attendances) {
+    //to be implemented method supposed to transfer the daily billings to an uneditable billing record
+    private static void closeDayAttendances(Attendance attendances) {
     }
 
+    //static method to search the employees list of the PersonDataRegistry type variable given;
     private static void viewEmployeesInLocalRegistry(PersonDataRegistry localRegistry) {
         System.out.println(localRegistry.viewEmployeesInRegistry());
     }
 
-    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, BillingHistory pastBillings, DeliveryServices deliveries,Scanner scanner) {
+
+    //
+    private static void menuPrincipal(Region localRegion, PersonDataRegistry localRegistry, Menu localMenu, BillingHistory pastBillings, DeliveryServices deliveries, Scanner scanner) {
 
         try {
             int menuChoice;
@@ -101,22 +103,22 @@ public class Main {
                 switch (menuChoice) {
                     case 1:
                         System.out.println("Starting menuAttendances...");
-                        menuAttendances(localRegion,localRegistry,localMenu, pastBillings ,scanner);
+                        menuAttendances(localRegion, localRegistry, localMenu, pastBillings, scanner);
                         System.out.println("Finished menuAttendances");
                         break;
                     case 2:
                         System.out.println("Starting menuMenu...");
-                        localMenu.menuMenu(localMenu,scanner);
+                        localMenu.menuMenu(localMenu, scanner);
                         System.out.println("Finished menuMenu");
                         break;
                     case 3:
                         System.out.println("Starting menuDeliveries...");
-                        deliveryMenu(localRegistry,deliveries.getReservationOrders(),pastBillings, localMenu,scanner);
+                        deliveryMenu(localRegistry, deliveries.getReservationOrders(), pastBillings, localMenu, scanner);
                         System.out.println("Finished menuDeliveries");
                         break;
                     case 4:
                         System.out.println("Starting menuAdm...");
-                        menuAdm(localRegion, localRegistry, pastBillings ,scanner);
+                        menuAdm(localRegion, localRegistry, pastBillings, scanner);
                         System.out.println("Finished menuAdm");
                         break;
                     case 5:
@@ -136,9 +138,6 @@ public class Main {
     }
 
 
-
-
-
     private static void menuDeliveries(Scanner scanner) {
     }
 
@@ -153,7 +152,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         try {
-            menuPrincipal(localRegion, localRegistry, localMenu, billingHistory,deliveries,scanner);
+            menuPrincipal(localRegion, localRegistry, localMenu, billingHistory, deliveries, scanner);
         } catch (Exception e) {
             System.out.println("Ocorreu um erro 11" + e.getMessage());
             e.printStackTrace();

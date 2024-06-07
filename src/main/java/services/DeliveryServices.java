@@ -38,7 +38,10 @@ public class DeliveryServices {
             scanner.nextLine();
             switch (menuChoice) {
                 case 1:
-                    reservationOrders.add(newReservationOrder(localRegistry, menu, scanner));
+                    ReservationOrder newReserve = newReservationOrder(localRegistry, menu, scanner);
+                    if (newReserve != null) {
+                        reservationOrders.add(newReserve);
+                    }
 
 
                     break;
@@ -62,9 +65,9 @@ public class DeliveryServices {
         } while (menuChoice != 0);
     }
 
-    private static void viewConfirmedReservations(BillingHistory pastBillings){
-        for(Billing pastReservationBill : pastBillings.getPastBillings()){
-            if(pastReservationBill.getReservationOrder()!=null){
+    private static void viewConfirmedReservations(BillingHistory pastBillings) {
+        for (Billing pastReservationBill : pastBillings.getPastBillings()) {
+            if (pastReservationBill.getReservationOrder() != null) {
                 System.out.println(pastReservationBill);
             }
         }
@@ -110,7 +113,7 @@ public class DeliveryServices {
         }
     }
 
-    public static ReservationOrder newReservationOrder(PersonDataRegistry localRegistry, Menu menu,  Scanner scanner) {
+    public static ReservationOrder newReservationOrder(PersonDataRegistry localRegistry, Menu menu, Scanner scanner) {
         int idSelection;
         int quantitySelection;
         int verificatorChoice;
@@ -166,15 +169,20 @@ public class DeliveryServices {
 
             do {
                 Client clientNewReservation;
-                System.out.println("INSIRA O CPF DO CLIENTE A EFETUAR A RESERVA, OU INSIRA 1 PARA ADICIONAR NOVO CLIENTE:\nPOR FAVOR, CPF APENAS NUMEROS ");
+                System.out.println("INSIRA O CPF DO CLIENTE A EFETUAR A RESERVA, OU INSIRA 1 PARA ADICIONAR NOVO CLIENTE:\nPOR FAVOR, CPF NO FORMATO \"123.456.789-12\"");
                 String consoleEntry = scanner.nextLine();
                 if (consoleEntry.equals("1")) {
-                    clientNewReservation = Client.registerNewClient(localRegistry.getClientsList(), scanner);
+                    clientNewReservation = Client.registerNewClient(localRegistry, scanner);
                     newReservationOrder.setClient(clientNewReservation);
                 } else {
-                    for (Client client : localRegistry.getClientsList()) {
-                        if (consoleEntry.equals(client.getCpf())) {
-                            newReservationOrder.setClient(client);
+                    if (!consoleEntry.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+                        System.out.println("CPF incorreto; por favor tente novamente");
+                        break;
+                    } else {
+                        for (Client client : localRegistry.getClientsList()) {
+                            if (consoleEntry.equals(client.getCpf())) {
+                                newReservationOrder.setClient(client);
+                            }
                         }
                     }
                 }

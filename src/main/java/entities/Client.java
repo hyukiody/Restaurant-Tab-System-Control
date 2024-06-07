@@ -1,6 +1,7 @@
 package entities;
 
 import services.accountance.Billing;
+import sets.PersonDataRegistry;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class Client extends Person {
         this.billHistory = new ArrayList<Billing>();
     }
 
-    public static Client registerNewClient(List<Client> clients, Scanner scanner) {
+    public static Client registerNewClient(PersonDataRegistry localRegistry, Scanner scanner) {
         Client client = null;
         try {
             System.out.println("Insira abaixo os dados do cliente a registrar");
@@ -41,18 +42,28 @@ public class Client extends Person {
             boolean cpfCheck;
             String cpf;
             do {
-                System.out.println("Insira abaixo o cpf do cliente:  ");
-                cpf = scanner.nextLine();
-                cpf = cpf.replaceAll("\\D+", "");
-                cpfCheck = false;
-                for (Client clientCheck : clients) {
-                    if (clientCheck.getCpf() == cpf) {
-                        System.out.println("CPF de Cliente já encontrado; por favor verifique e tente novamente.");
-                        cpfCheck = true;
-                    }
-                }
-            } while (cpfCheck);
-
+    System.out.println("Insira abaixo o cpf do cliente:  ");
+    cpf = scanner.nextLine();
+    cpfCheck = false;
+    if (!cpf.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+        System.out.println("CPF incorreto; por favor tente novamente");
+        cpfCheck = true;
+    } else {
+        for (Client clientCheck : localRegistry.getClientsList()) {
+            if (clientCheck.getCpf().equals(cpf)) {
+                System.out.println("CPF de Cliente já encontrado; por favor verifique e tente novamente.");
+                cpfCheck = true;
+                break;
+            }
+        }for (Employee clientCheck : localRegistry.getEmployeesList()) {
+            if (clientCheck.getCpf().equals(cpf)) {
+                System.out.println("CPF de Cliente já encontrado; por favor verifique e tente novamente.");
+                cpfCheck = true;
+                break;
+            }
+        }
+    }
+} while (cpfCheck);
             Address address = new Address().newAddress(scanner);
             client = new Client(name, phone, age, gender, email, cpf, address);
         } catch (InputMismatchException e) {
@@ -61,8 +72,8 @@ public class Client extends Person {
             System.out.println("An error occurred: " + e.getMessage());
         }
         if (client != null) {
-            clients.add(client);
-            Collections.sort(clients, Comparator.comparing(Client::getName));
+            localRegistry.getClientsList().add(client);
+            Collections.sort(localRegistry.getClientsList(), Comparator.comparing(Client::getName));
         }
         return client;
     }
@@ -73,7 +84,7 @@ public class Client extends Person {
 
     @Override
     public String toString() {
-        return "\nCliente: \nNome: " + getName() + "Telefone: " + getPhone() + "Idade: " + getAge() + "\nGenero :" + getGender() + "E-mail:" + getEmail() + "CPF: " + getCpf() + "\nEndereço: " + getAddress().toString();
+        return "\nCliente: \nNome: " + getName() + "        Telefone: " + getPhone() + "        Idade: " + getAge() + "\nGenero :" + getGender() + "        E-mail:" + getEmail() + "       CPF: " + getCpf() + "\nEndereço: " + getAddress().toString();
     }
 
 
