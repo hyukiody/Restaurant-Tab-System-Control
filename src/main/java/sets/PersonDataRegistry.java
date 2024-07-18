@@ -100,6 +100,22 @@ public List<Deliverer> getDeliverers() {
         .map(Deliverer.class::cast)
         .collect(Collectors.toList());
 }
+    public String viewEmployeesByType(String employeeType){
+        StringBuilder body = new StringBuilder("Funcionarios do tipo: " +  employeeType + " no cadastrados no sistema");
+        if(!getEmployeesList().isEmpty()){
+            int num=1;
+            for(Employee employee : getEmployeesList()){
+                if(employee.getClassName().equals(employeeType)){
+                    body.append("\n Nº ").append(num).append(employee.toString());
+                    num++;
+                }
+            }
+        }else{
+            System.out.println("NÃO HÁ FUNCIONARIOS DESTE TIPO CADASTRADOS AINDA");
+        }
+        return body.toString();
+
+    }
     public String viewEmployeesInRegistry() {
         StringBuilder body = new StringBuilder("Funcionarios cadastrados no registro local:");
         if (!getEmployeesList().isEmpty()) {

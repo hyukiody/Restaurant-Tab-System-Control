@@ -130,7 +130,7 @@ public class DeliveryServices {
 
                 switch (reservationChoice) {
                     case 1:
-                        System.out.println(localRegistry.getDeliverers());
+                        System.out.println(localRegistry.viewEmployeesByType("Deliverer"));
                         System.out.println("INSIRA O ID DO ENTREGADOR DESEJADO(A)");
                         idSelection = scanner.nextInt();
                         scanner.nextLine();
@@ -138,7 +138,7 @@ public class DeliveryServices {
                         break;
 
                     case 2:
-                        System.out.println(localRegistry.getClerks());
+                        System.out.println(localRegistry.viewEmployeesByType("Clerk"));
                         System.out.println("INSIRA O ID DO BALCONISTA DESEJADO(A)");
                         idSelection = scanner.nextInt();
                         scanner.nextLine();
